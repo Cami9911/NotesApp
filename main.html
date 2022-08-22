@@ -10,24 +10,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
         integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/7601e35f17.js" crossorigin="anonymous"></script>
     <title>To Do List</title>
 </head>
 
 <body>
 
     <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
+        <div class="sidebarButtons">
+            <a class="openbtn" id="openbtn" onclick="openNav()">&#9776; </a>
+            <a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
+        </div>
+
+        <a href="#">
+            <div class="sidebarOption" id="sidebarOption1">
+                <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons"></i>
+                <p id="sidebarTitle1" class="sidebarTitle">About</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="sidebarOption" id="sidebarOption2">
+                <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons"></i>
+                <p id="sidebarTitle2" class="sidebarTitle">Services</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="sidebarOption" id="sidebarOption3">
+                <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons"></i>
+                <p id="sidebarTitle3" class="sidebarTitle">Clients</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="sidebarOption" id="sidebarOption4">
+                <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons"></i>
+                <p id="sidebarTitle4" class="sidebarTitle">Contact</p>
+            </div>
+        </a>
     </div>
 
     <div id="main">
         <header>
             <h1>What do you want to do today?</h1>
         </header>
-        <button class="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
         <div class="combobox">
             <input type="text" name="option" list="optionsList">
             <datalist id="optionsList">
