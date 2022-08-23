@@ -18,7 +18,7 @@
 
     <div id="mySidebar" class="sidebar">
         <div class="sidebarButtons">
-            <a class="openbtn" id="openbtn" onclick="openNav()">&#9776; </a>
+            <a class="openbtn" id="openbtn" onmouseover="openNav()">&#9776; </a>
             <a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
         </div>
 
@@ -49,21 +49,27 @@
     </div>
 
     <div id="main">
-        <header>
-            <h1>What do you want to do today?</h1>
-        </header>
         <div class="combobox">
-            <input type="text" name="option" list="optionsList">
+            <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons searchIcon"></i>
+            <input type="text" name="option" list="optionsList" class="optionsInput">
             <datalist id="optionsList">
                 <option value="Note">
                 <option value="List">
             </datalist>
         </div>
+        <header>
+            <p>What do you want to do today?</p>
+        </header>
+     
         <div class="grid-container">
             <div class="grid-item">1</div>
             <div class="grid-item">2</div>
             <div class="grid-item">3</div>
             <div class="grid-item">3</div>
+        </div>
+
+        <div class="note-content">
+
         </div>
     </div>
 
