@@ -48,10 +48,11 @@
         </a>
     </div>
 
-    <div id="main">
+    <div id="main" onmouseover="closeNav()">
         <div class="combobox">
-            <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons searchIcon"></i>
-            <input type="text" name="option" list="optionsList" class="optionsInput">
+            <i class="fa-solid fa-magnifying-glass sidebarIcons searchIcon" id="searchIcon"></i>
+            <input type="text" name="option" list="optionsList" class="optionsInput" onmouseover="hideIcon()"
+                onmouseout="displayIcon()">
             <datalist id="optionsList">
                 <option value="Note">
                 <option value="List">
@@ -60,17 +61,113 @@
         <header>
             <p>What do you want to do today?</p>
         </header>
-     
+
         <div class="grid-container">
-            <div class="grid-item">1</div>
-            <div class="grid-item">2</div>
-            <div class="grid-item">3</div>
-            <div class="grid-item">3</div>
+            <div class="grid-item center">1</div>
+            <div class="grid-item center">2</div>
+            <div class="grid-item center">3</div>
+            <div class="grid-item center">3</div>
         </div>
 
-        <div class="note-content">
+        <div class="note-panel">
+            <p class="title-panel">Notes</p>
+
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'Recently')" id="defaultOpen">Recently</button>
+                <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+                <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+            </div>
+
+            <div id="Recently" class="tabcontent">
+                <div class="note-grid">
+                    <div class="note-item">
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                    <div class="note-item center">2</div>
+                    <div class="note-item center">3</div>
+                    <div class="note-item center">3</div>
+                    <div class="note-item">
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                    <div class="note-item center">2</div>
+                </div>
+            </div>
+
+            <div id="Paris" class="tabcontent">
+                <div class="note-grid">
+                    <div class="note-item">
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                    <div class="note-item">
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                    <div class="note-item center">2</div>
+                </div>
+            </div>
+
+            <div id="Tokyo" class="tabcontent">
+                <div class="note-grid">
+                    <div class="note-item">
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                    <div class="note-item center">2</div>
+                    <div class="note-item center">3</div>
+                    <div class="note-item center">2</div>
+                </div>
+            </div>
+
+
 
         </div>
+        <div class="fixed-button">
+            <button class="add-button" id="addNewNoteBtn">
+                <i class="fa-solid fa-plus"></i>
+                <p class="label-button">New</p>
+            </button>
+        </div>
+
+        <div id="addNewNoteModal" class="modal">
+            <span class="closeModal">&times;</span>
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="note-form">
+                    <p class="formTitle">Add a new note</p>
+                    <form class="addNewNoteForm">
+                        <div class="inputNote">
+                            <input type="text" id="noteTitle" name="title" value="" placeholder="Title">
+                        </div>
+                        <div class="inputNote">
+                            <textarea id="noteContent" name="content" value="" placeholder="Content"></textarea>
+                        </div>
+                        <input type="submit" value="Submit" id="submit">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+
     </div>
 
 
