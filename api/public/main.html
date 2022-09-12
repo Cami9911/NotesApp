@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="./main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" href="#">
+    <script src="https://kit.fontawesome.com/7601e35f17.js" crossorigin="anonymous"></script>
+    <title>To Do List</title>
+</head>
+
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <div class="sidebarButtons">
+            <a class="openbtn" id="openbtn" onmouseover="openNav()">&#9776; </a>
+            <a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
+        </div>
+
+        <a href="#">
+            <div class="sidebarOption" id="sidebarOption1">
+                <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons"></i>
+                <p id="sidebarTitle1" class="sidebarTitle">About</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="sidebarOption" id="sidebarOption2">
+                <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons"></i>
+                <p id="sidebarTitle2" class="sidebarTitle">Services</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="sidebarOption" id="sidebarOption3">
+                <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons"></i>
+                <p id="sidebarTitle3" class="sidebarTitle">Clients</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="sidebarOption" id="sidebarOption4">
+                <i class="fa-solid fa-thumbs-up fa-5x sidebarIcons"></i>
+                <p id="sidebarTitle4" class="sidebarTitle">Contact</p>
+            </div>
+        </a>
+    </div>
+
+    <div id="main" onmouseover="closeNav()">
+        <div class="combobox">
+            <i class="fa-solid fa-magnifying-glass sidebarIcons searchIcon" id="searchIcon"></i>
+            <input type="text" name="option" list="optionsList" class="optionsInput" onmouseover="hideIcon('searchIcon')"
+                onmouseout="displayIcon('searchIcon')">
+            <datalist id="optionsList">
+                <option value="Note">
+                <option value="List">
+            </datalist>
+        </div>
+        <header>
+            <p id="title"></p>
+        </header>
+
+        <div class="grid-container">
+            <div class="grid-item center">1</div>
+            <div class="grid-item center">2</div>
+            <div class="grid-item center">3</div>
+            <div class="grid-item center">3</div>
+        </div>
+
+        <div class="note-panel">
+            <p class="title-panel">Notes</p>
+
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'Recently')" id="defaultOpen">Recently</button>
+                <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+                <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+            </div>
+
+            <div id="Recently" class="tabcontent">
+                <div class="note-grid" id="note-grid-recently">
+                    <div class="note-item" onmouseover="displayIcon('deleteIcon')" onmouseout="hideIcon('deleteIcon')">
+                        <i class="fa-solid fa-trash deleteIcon" id="deleteIcon"></i>
+
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Paris" class="tabcontent">
+                <div class="note-grid">
+                    <div class="note-item" id="note-item">
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                    <div class="note-item">
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                    <div class="note-item center">2</div>
+                </div>
+            </div>
+
+            <div id="Tokyo" class="tabcontent">
+                <div id="note-grid" class="note-grid">
+                    <div class="note-item">
+                        <p class="note-title">Title</p>
+                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div>
+                    <div class="note-item center">2</div>
+                    <div class="note-item center">3</div>
+                    <div class="note-item center">2</div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="fixed-button">
+            <button class="add-button" id="addNewNoteBtn">
+                <i class="fa-solid fa-plus"></i>
+                <p class="label-button" onclick="getUsers()">New</p>
+            </button>
+        </div>
+
+        <div id="addNewNoteModal" class="modal">
+            <span class="closeModal">&times;</span>
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="note-form">
+                    <p class="formTitle">Add a new note</p>
+                    <form class="addNewNoteForm" method="POST" id="addNewNoteForm">
+                        <div class="inputNote">
+                            <input type="text" id="noteTitle" name="title" value="" placeholder="Title">
+                        </div>
+                        <div class="inputNote">
+                            <textarea id="noteContent" name="content" value="" placeholder="Content"></textarea>
+                        </div>
+                        <input type="submit" value="Submit" id="submit" onclick="getFormValues(event)">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <script defer src="./main.js"></script>
+</body>
+
+</html>
