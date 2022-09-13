@@ -2,11 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  -webkit-transition: 1s ease;
-  -moz-transition: 1s ease;
-  -ms-transition: 1s ease;
-  -o-transition: 1s ease;
-  transition: 1s ease;
+
 }
 
 body {
@@ -126,10 +122,15 @@ div #optionsList {
 
 .note-item:hover {
   background-color: #ec818182;
+  transition: 1s;
 }
 
 .note-content {
   font-size: 10px;
+  margin-top: 10px;
+}
+
+.note-title {
   margin-top: 10px;
 }
 
@@ -254,11 +255,20 @@ p.title-panel {
   color: #818181b6;
 }
 
-.deleteIcon {
+.deleteIcon,
+.editIcon {
   position: absolute;
-  margin-left: 115px;
   font-size: 15px;
-  color: #2b7d16;
+}
+
+.deleteIcon {
+  margin-left: 115px;
+  color: #2b7d16d9;
+}
+
+.editIcon {
+  margin-left: 95px;
+  color: #e8b445;
 }
 
 #deleteIcon {
@@ -320,7 +330,8 @@ p.title-panel {
 }
 
 /* The Modal (background) */
-.modal {
+.modal,
+.editNoteModal {
   display: none;
   /* Hidden by default */
   position: fixed;
@@ -422,7 +433,9 @@ textarea::placeholder {
   height: 90%;
 }
 
-#submit {
+#submit,
+#saveNote,
+#cancelNote {
   padding: 10px;
   width: 210px;
   border-radius: 17px;
@@ -430,13 +443,23 @@ textarea::placeholder {
   background-color: #8181816d;
   color: #dadada82;
   position: absolute;
-  bottom: 0px;
   cursor: pointer;
+}
+
+#submit {
+  bottom: 0px;
   margin-left: 25%;
 }
 
-#submit:hover {
+#saveNote,
+#cancelNote {
+  bottom: 250px;
+  margin-left: 7%;
+}
 
+#submit:hover,
+#saveNote:hover,
+#cancelNote:hover {
   background: #8181814f;
   color: rgba(245, 245, 245, 0.823);
 }

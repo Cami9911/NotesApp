@@ -52,8 +52,8 @@
     <div id="main" onmouseover="closeNav()">
         <div class="combobox">
             <i class="fa-solid fa-magnifying-glass sidebarIcons searchIcon" id="searchIcon"></i>
-            <input type="text" name="option" list="optionsList" class="optionsInput" onmouseover="hideIcon('searchIcon')"
-                onmouseout="displayIcon('searchIcon')">
+            <input type="text" name="option" list="optionsList" class="optionsInput"
+                onmouseover="hideIcon('searchIcon')" onmouseout="displayIcon('searchIcon')">
             <datalist id="optionsList">
                 <option value="Note">
                 <option value="List">
@@ -82,8 +82,10 @@
             <div id="Recently" class="tabcontent">
                 <div class="note-grid" id="note-grid-recently">
                     <div class="note-item" onmouseover="displayIcon('deleteIcon')" onmouseout="hideIcon('deleteIcon')">
-                        <i class="fa-solid fa-trash deleteIcon" id="deleteIcon"></i>
-
+                        <i class="fa-solid fa-trash deleteIcon" id="deleteIcon" name='deleteIcon'
+                            onclick="deleteNote(this)"></i>
+                        <i class="fa-solid fa-edit editIcon" id="editIcon" name='editIcon'
+                            onclick="displayModal('editNoteModal','closeEditModal')"></i>
                         <p class="note-title">Title</p>
                         <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
                             nemo
@@ -131,16 +133,15 @@
 
 
         </div>
-        <div class="fixed-button">
+        <div class="fixed-button" onclick="displayModal('addNewNoteModal', 'closeModal')">
             <button class="add-button" id="addNewNoteBtn">
                 <i class="fa-solid fa-plus"></i>
-                <p class="label-button" onclick="getUsers()">New</p>
+                <p class="label-button">New</p>
             </button>
         </div>
 
         <div id="addNewNoteModal" class="modal">
             <span class="closeModal">&times;</span>
-            <!-- Modal content -->
             <div class="modal-content">
                 <div class="note-form">
                     <p class="formTitle">Add a new note</p>
@@ -154,9 +155,26 @@
                         <input type="submit" value="Submit" id="submit" onclick="getFormValues(event)">
                     </form>
                 </div>
-
             </div>
+        </div>
 
+        <div id="editNoteModal" class="editNoteModal">
+            <span class="closeEditModal">&times;</span>
+            <div class="modal-content">
+                <div class="note-form">
+                    <p class="formTitle">Edit note</p>
+                    <form class="editNoteForm" method="POST" id="editNoteForm">
+                        <div class="inputNote">
+                            <input type="text" id="noteTitle" name="title" value="" placeholder="Title">
+                        </div>
+                        <div class="inputNote">
+                            <textarea id="noteContent" name="content" value="" placeholder="Content"></textarea>
+                        </div>
+                        <input type="submit" value="Save" id="saveNote" onclick="">
+                        <input type="cancel" value="Cancel" id="cancelNote" onclick="">
+                    </form>
+                </div>
+            </div>
         </div>
 
 
