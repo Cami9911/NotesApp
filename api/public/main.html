@@ -85,9 +85,9 @@
                         <i class="fa-solid fa-trash deleteIcon" id="deleteIcon" name='deleteIcon'
                             onclick="deleteNote(this)"></i>
                         <i class="fa-solid fa-edit editIcon" id="editIcon" name='editIcon'
-                            onclick="displayModal('editNoteModal','closeEditModal')"></i>
-                        <p class="note-title">Title</p>
-                        <p class="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
+                            onclick="displayModal('editNoteModal','closeEditModal', null)"></i>
+                        <p class="note-title" id="note-title">Title</p>
+                        <p class="note-content" id="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, culpa
                             nemo
                             impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
                             placeat eligendi modi? Modi, in!</p>
@@ -133,7 +133,7 @@
 
 
         </div>
-        <div class="fixed-button" onclick="displayModal('addNewNoteModal', 'closeModal')">
+        <div class="fixed-button" onclick="displayModal('addNewNoteModal', 'closeModal', null)">
             <button class="add-button" id="addNewNoteBtn">
                 <i class="fa-solid fa-plus"></i>
                 <p class="label-button">New</p>
@@ -165,13 +165,14 @@
                     <p class="formTitle">Edit note</p>
                     <form class="editNoteForm" method="POST" id="editNoteForm">
                         <div class="inputNote">
-                            <input type="text" id="noteTitle" name="title" value="" placeholder="Title">
+                            <i class="fa-solid fa-pen editIcon" aria-hidden="true"></i>
+                            <input type="text" id="editTitle" name="title" value="" placeholder="Title">
                         </div>
                         <div class="inputNote">
-                            <textarea id="noteContent" name="content" value="" placeholder="Content"></textarea>
+                            <textarea id="editContent" name="content" value="" placeholder="Content"></textarea>
                         </div>
-                        <input type="submit" value="Save" id="saveNote" onclick="">
-                        <input type="cancel" value="Cancel" id="cancelNote" onclick="">
+                        <input type="cancel" value="Cancel" id="cancelNote" onclick="closeModal('editNoteModal')">
+                        <input type="submit" value="Save" id="saveNote" onclick="updateNote(event)">
                     </form>
                 </div>
             </div>

@@ -44,3 +44,20 @@ router.delete('/delete-note/:id', (req, res) => {
       console.log(err);
     });
 });
+
+router.put('/update-note/:id', (req, res) => {
+  const id = req.params.id;
+
+  const note = {
+    title: req.body.title,
+    content: req.body.content
+  }
+
+  Note.findByIdAndUpdate(id, note)
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});

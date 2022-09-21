@@ -384,9 +384,16 @@ p.title-panel {
   cursor: pointer;
 }
 
+.formTitle{
+  text-transform: uppercase;
+  color: #f7f5f582;
+}
+
 /* Form */
 #noteTitle,
-#noteContent {
+#noteContent,
+#editContent,
+#editTitle {
   border: none;
   width: 80%;
   height: 35px;
@@ -394,11 +401,6 @@ p.title-panel {
   background-color: #ec8181;
   color: #525252;
   text-decoration: none;
-}
-
-.inputNote textarea:hover,
-input:hover {
-  color: #9938386d;
 }
 
 .inputNote textarea:focus,
@@ -411,7 +413,8 @@ textarea::placeholder {
   color: #525252;
 }
 
-#noteContent {
+#noteContent,
+#editContent {
   height: 100px;
   resize: none
 }
@@ -451,10 +454,16 @@ textarea::placeholder {
   margin-left: 25%;
 }
 
-#saveNote,
 #cancelNote {
   bottom: 250px;
-  margin-left: 7%;
+  width: 190px;
+  text-align: center;
+}
+
+#saveNote{
+  bottom: 250px;
+  margin-left: 15%;
+  width: 190px;
 }
 
 #submit:hover,
@@ -466,7 +475,7 @@ textarea::placeholder {
 
 .inputNote :hover::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: #cdcdcd97;
+  color: #f7f5f582;
 }
 
 :hover::-moz-placeholder {

@@ -49,10 +49,21 @@ function openCity(evt, cityName) {
 document.getElementById("defaultOpen").click();
 
 
-function displayModal(idModal, classModal) {
-  console.log(idModal)
+function displayModal(idModal, classModal, noteID) {
+
+  if (noteID) {
+    document.getElementsByClassName('note-form').id = noteID;
+
+    var editTitle = document.getElementById('note-title' + noteID).innerHTML;
+    var editContent = document.getElementById('note-content' + noteID).innerHTML;
+    
+    document.getElementById('editTitle').value = editTitle;
+    document.getElementById('editContent').innerHTML = editContent;
+  }
+
   var modal = document.getElementById(idModal);
   var span = document.getElementsByClassName(classModal)[0];
+
 
   modal.style.display = "block";
 
@@ -67,6 +78,10 @@ function displayModal(idModal, classModal) {
   }
 }
 
+function closeModal(idModal) {
+  document.getElementById(idModal).style.display = "none";
+}
+
 function getAllNotes(notes) {
 
   notes.forEach(note => {
@@ -75,10 +90,12 @@ function getAllNotes(notes) {
 
     const title = document.createElement("p");
     title.classList.add("note-title");
+    title.id = 'note-title' + noteID;
     title.innerText = note.title;
 
     const content = document.createElement("p");
     content.classList.add("note-content");
+    content.id = 'note-content' + noteID;
     content.innerText = note.content;
 
     var iconDelete = document.createElement("i");
@@ -89,14 +106,14 @@ function getAllNotes(notes) {
 
     var iconEdit = document.createElement("i");
     iconEdit.className = "fa-solid fa-edit editIcon"
-    iconEdit.id = 'edit'+noteID;
+    iconEdit.id = 'edit' + noteID;
     iconEdit.style.display = 'none';
-    iconEdit.addEventListener("click", function () { displayModal('editNoteModal','closeEditModal'); }, false)
+    iconEdit.addEventListener("click", function () { displayModal('editNoteModal', 'closeEditModal', noteID); }, false)
     // iconEdit.innerHTML = `<i class="fa-solid fa-edit editIcon" aria-hidden="true" onclick="displayModal('editNoteModal','closeEditModal')" id=${noteID}></i>`;
 
     const item = document.createElement('div');
     item.classList.add("note-item");
-  
+
     item.appendChild(iconEdit);
     item.appendChild(iconDelete);
     item.appendChild(title);
@@ -104,8 +121,8 @@ function getAllNotes(notes) {
 
     item.addEventListener("mouseover", function () { displayIcon(noteID) });
     item.addEventListener('mouseout', function () { hideIcon(noteID) });
-    item.addEventListener("mouseover", function () { displayIcon('edit'+noteID) });
-    item.addEventListener('mouseout', function () { hideIcon('edit'+noteID) });
+    item.addEventListener("mouseover", function () { displayIcon('edit' + noteID) });
+    item.addEventListener('mouseout', function () { hideIcon('edit' + noteID) });
 
     const noteGrid = document.getElementById("note-grid-recently");
     noteGrid.appendChild(item);
@@ -163,4 +180,33 @@ function deleteData(url, id) {
       console.error('Error:', error);
     });
 
+}
+
+function updateData(url, id, data) {
+  fetch('http://localhost:3000/' + url + '/' + id, {
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then(() => {
+      location.reload();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+}
+
+function updateNote(event) {
+  event.preventDefault();
+
+  const formData = new FormData(document.getElementById('editNoteForm'));
+  const data = Object.fromEntries(formData);
+  
+  var noteID = document.getElementsByClassName('note-form').id;
+
+  updateData('update-note',noteID, data);
 }
