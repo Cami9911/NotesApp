@@ -19,6 +19,20 @@ body {
   align-items: center;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex {
+  display: flex;
+}
+
+.space-around {
+  display: flex;
+  justify-content: space-around;
+}
+
 header {
   font-size: 15px;
   font-weight: bold;
@@ -64,12 +78,30 @@ div #optionsList {
   width: 20rem;
 }
 
+.quick-tips {
+  width: 52%;
+  margin-top: 3%;
+  /* height: 410px; */
+  margin-left: 5%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 19px 0px 19px 0;
+}
+
+.tipsHeader {
+  font-size: 15px;
+  font-weight: bold;
+  color: #818181;
+  text-transform: uppercase;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  justify-content: start;
   gap: 20px;
-  padding-left: 5%;
+  padding-left: 3%;
 }
 
 .grid-item {
@@ -80,6 +112,7 @@ div #optionsList {
   color: black;
   border-radius: 10px;
   cursor: pointer;
+  border: rgba(182, 180, 180, 0.575) 1px solid;
   /* box-shadow: 3px 3px 50px rgba(128, 128, 128, 0.2); */
 }
 
@@ -88,9 +121,61 @@ div #optionsList {
   transition: 1s;
 }
 
+.tipsIcons {
+  margin-top: 7px;
+}
+
+.tipsIconLeft {
+  margin-left: 5%;
+  font-size: 18px;
+}
+
+.tipsIconRight {
+  margin-left: 70%;
+  font-size: 24px;
+}
+
+.tipsTitle {
+  font-size: 15px;
+  margin-left: 5%;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.tipsSubtitle {
+  margin-left: 5%;
+  margin-top: 5px;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #818181;
+}
+
+.imageIcons {
+  color: rgb(57, 142, 253);
+}
+
+.documentIcons {
+  color: rgb(143, 229, 172);
+}
+
+.notificationIcons {
+  color: #e8b445bc;
+}
+
+.lightningIcon {
+  color: rgb(255, 199, 68);
+}
+
+.checkIcon {
+  color: #ec8181;
+  margin-left: 2px;
+}
+
 .note-panel {
-  width: 92%;
-  height: 410px;
+  width: 90%;
+  height: 400px;
   margin-top: 3%;
   margin-left: 5%;
   background-color: rgba(255, 255, 255, 0.8);
@@ -114,7 +199,7 @@ div #optionsList {
   height: 250px;
   color: black;
   border-radius: 10px;
-  border: rgb(182, 180, 180) 1px solid;
+  border: rgba(182, 180, 180, 0.575) 1px solid;
   overflow: hidden;
   cursor: pointer;
   /* box-shadow: 3px 3px 50px rgba(128, 128, 128, 0.2); */
@@ -145,11 +230,13 @@ p.title-panel {
 
 .fixed-button {
   position: fixed;
-  bottom: 20%;
-  right: 20%;
+  display: inline-block;
+  bottom: 21%;
+  right: 21%;
 }
 
 .add-button {
+  color: white;
   width: 180px;
   height: 40px;
   border-radius: 20px;
@@ -164,14 +251,44 @@ p.title-panel {
   font-weight: bold;
 }
 
-.add-button:hover {
+.add-button:hover{
   background-color: #818181b6;
-  color: white;
+  color: black;
 }
 
 .label-button {
   margin-left: 5px;
   font-size: 16px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #d3d3d3b6;
+  min-width: 170px;
+  overflow: auto;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: 40px;
+  left: 5px;
+  border-radius: 20px;
+}
+
+.dropdown-content a {
+  color: #8d8d8d;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 15px;
+}
+
+.fixed-button a:hover {
+  background-color: rgba(255, 255, 255, 0.388);
+  color: black;
+}
+
+.show {
+  display: block;
 }
 
 /* The sidebar menu */
@@ -218,6 +335,7 @@ p.title-panel {
 
 .sidebarTitle {
   display: none;
+  margin-left: 8px;
 }
 
 #closebtn {
@@ -239,13 +357,18 @@ p.title-panel {
 }
 
 .sidebarButtons {
-  display: flex;
-  flex-direction: row;
   justify-content: space-around;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .sidebarIcons {
   font-size: 25px !important;
+}
+
+.tabIcons {
+  font-size: 16px !important;
+  margin-right: 2px;
 }
 
 .searchIcon {
@@ -263,21 +386,16 @@ p.title-panel {
 
 .deleteIcon {
   margin-left: 115px;
-  color: #2b7d16d9;
+  color: rgba(101, 164, 122, 0.784);
 }
 
 .editIcon {
   margin-left: 95px;
-  color: #e8b445;
+  color: #d3a542;
 }
 
 #deleteIcon {
   display: none;
-}
-
-.sidebarOption {
-  display: flex;
-  flex-direction: row;
 }
 
 #main:hover #mySidebar {
@@ -367,6 +485,24 @@ p.title-panel {
   box-shadow: 8px 12px 15px -3px rgb(39 39 39 / 47%);
 }
 
+.modal-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.iconHeart{
+  margin-right: 5px;
+}
+
+#favSelected, #impSelected{
+  display: none;
+}
+
+#favSelected,#favUnselected, #impSelected, #impUnselected{
+  font-size: 18px!important;
+}
+
+
 /* The Close Button */
 .closeModal {
   color: #818181;
@@ -384,7 +520,7 @@ p.title-panel {
   cursor: pointer;
 }
 
-.formTitle{
+.formTitle {
   text-transform: uppercase;
   color: #f7f5f582;
 }
@@ -460,7 +596,7 @@ textarea::placeholder {
   text-align: center;
 }
 
-#saveNote{
+#saveNote {
   bottom: 250px;
   margin-left: 15%;
   width: 190px;

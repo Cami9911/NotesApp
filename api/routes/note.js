@@ -4,24 +4,52 @@ const Note = require('../models/note')
 
 module.exports = router;
 
-
-
 router.get('/notes', async (req, res) => {
   await Note.find().sort({ createdAt: 'desc' })
     .then((result) => {
       res.send(result)
-      //   res.redirect('main.html')
     })
     .catch((err) => {
       console.log(err)
     })
+});
 
+router.get('/recent-notes', async (req, res) => {
+  await Note.find().sort({ createdAt: 'desc' }).limit(8)
+    .then((result) => {
+      res.send(result)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+});
+
+router.get('/favourite-notes', async (req, res) => {
+  await Note.find({favourite: true }).sort({ createdAt: 'desc' })
+    .then((result) => {
+      res.send(result)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+});
+
+router.get('/important-notes', async (req, res) => {
+  await Note.find({important: true }).sort({ createdAt: 'desc' })
+    .then((result) => {
+      res.send(result)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 });
 
 router.post('/add-note', (req, res) => {
   const note = new Note({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    important: req.body.important,
+    favourite: req.body.favourite
   })
 
   note.save()

@@ -10,6 +10,14 @@ const noteSchema = new Schema({
     type: String,
     required: true
   },
+  important: {
+    type: Boolean,
+    required: false
+  },
+  favourite: {
+    type: Boolean,
+    required: false
+  }
 }, { timestamps: true });
 
 const Note = mongoose.model('Note', noteSchema);

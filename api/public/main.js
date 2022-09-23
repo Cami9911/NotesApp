@@ -1,35 +1,39 @@
+function getStyleElementById(id){
+  return document.getElementById(id).style;
+}
+
 /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
 function openNav() {
-  document.getElementById("mySidebar").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-  document.getElementById("closebtn").style.display = "block";
-  document.getElementById("openbtn").style.display = "none";
+  getStyleElementById("mySidebar").width = "250px";
+  getStyleElementById("main").marginLeft = "250px";
+  getStyleElementById("closebtn").display = "block";
+  getStyleElementById("openbtn").display = "none";
 
   for (var i = 1; i <= 4; i++) {
-    document.getElementById("sidebarTitle" + i).style.display = "block";
-    document.getElementById("sidebarOption" + i).style.paddingLeft = "36px";
+    getStyleElementById("sidebarTitle" + i).display = "block";
+    getStyleElementById("sidebarOption" + i).paddingLeft = "36px";
   }
 }
 
 /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
 function closeNav() {
-  document.getElementById("mySidebar").style.width = "50px";
-  document.getElementById("main").style.marginLeft = "50px";
-  document.getElementById("closebtn").style.display = "none";
-  document.getElementById("openbtn").style.display = "block";
+  getStyleElementById("mySidebar").width = "50px";
+  getStyleElementById("main").marginLeft = "50px";
+  getStyleElementById("closebtn").display = "none";
+  getStyleElementById("openbtn").display = "block";
 
   for (var i = 1; i <= 4; i++) {
-    document.getElementById("sidebarTitle" + i).style.display = "none";
-    document.getElementById("sidebarOption" + i).style.paddingLeft = "2px";
+    getStyleElementById("sidebarTitle" + i).display = "none";
+    getStyleElementById("sidebarOption" + i).paddingLeft = "2px";
   }
 }
 
 function hideIcon(id) {
-  document.getElementById(id).style.display = "none";
+  getStyleElementById(id).display = "none";
 }
 
 function displayIcon(id) {
-  document.getElementById(id).style.display = "block";
+  getStyleElementById(id).display = "block";
 }
 
 
@@ -43,20 +47,22 @@ function openCity(evt, cityName) {
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
-  document.getElementById(cityName).style.display = "block";
+  getStyleElementById(cityName).display = "block";
   evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
 
 
 function displayModal(idModal, classModal, noteID) {
+  document.getElementsByClassName("dropdown-content")[0].classList.remove('show');
+
 
   if (noteID) {
     document.getElementsByClassName('note-form').id = noteID;
 
     var editTitle = document.getElementById('note-title' + noteID).innerHTML;
     var editContent = document.getElementById('note-content' + noteID).innerHTML;
-    
+
     document.getElementById('editTitle').value = editTitle;
     document.getElementById('editContent').innerHTML = editContent;
   }
@@ -79,10 +85,10 @@ function displayModal(idModal, classModal, noteID) {
 }
 
 function closeModal(idModal) {
-  document.getElementById(idModal).style.display = "none";
+  getStyleElementById(idModal).display = "none";
 }
 
-function getAllNotes(notes) {
+function getNotes(notes, gridId) {
 
   notes.forEach(note => {
 
@@ -124,17 +130,22 @@ function getAllNotes(notes) {
     item.addEventListener("mouseover", function () { displayIcon('edit' + noteID) });
     item.addEventListener('mouseout', function () { hideIcon('edit' + noteID) });
 
-    const noteGrid = document.getElementById("note-grid-recently");
+
+    const noteGrid = document.getElementById(gridId);
     noteGrid.appendChild(item);
   });
 }
 
-window.addEventListener("load", getData('notes'));
+window.addEventListener("load", function () {
+  getData('recent-notes', "note-grid-recently");
+  getData('favourite-notes', "note-grid-favourite")
+  getData('important-notes', "note-grid-important")
+});
 
-async function getData(url) {
+async function getData(url, gridId) {
   try {
     let res = await fetch('http://localhost:3000/' + url);
-    getAllNotes(await res.json());
+    getNotes(await res.json(), gridId);
   } catch (error) {
     console.log(error);
   }
@@ -161,8 +172,21 @@ function postData(data, url) {
 function getFormValues(event) {
   event.preventDefault();
 
+  var favourite = false;
+  var important = false;
+
   const formData = new FormData(document.getElementById('addNewNoteForm'));
   const data = Object.fromEntries(formData);
+
+  if(getStyleElementById("favSelected").display == "inline-block"){
+    favourite = true;
+  }
+  if(getStyleElementById("impSelected").display == "inline-block"){
+    important = true;
+  }
+
+  data["favourite"] = favourite;
+  data["important"] = important;
 
   postData(data, 'add-note')
 
@@ -205,8 +229,36 @@ function updateNote(event) {
 
   const formData = new FormData(document.getElementById('editNoteForm'));
   const data = Object.fromEntries(formData);
-  
+
   var noteID = document.getElementsByClassName('note-form').id;
 
-  updateData('update-note',noteID, data);
+  updateData('update-note', noteID, data);
+}
+
+function openDropdown() {
+  document.getElementById("addDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function (event) {
+  if (!event.target.matches('.add-button')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+function enableIcon(iconEnable,iconDisable){
+  getStyleElementById(iconEnable).display = "inline-block";
+  getStyleElementById(iconDisable).display = "none";
+}
+
+function disableIcon(iconEnable,iconDisable){
+  document.getElementById(iconDisable).style.display = "none";
+  document.getElementById(iconEnable).style.display = "inline-block";
 }
