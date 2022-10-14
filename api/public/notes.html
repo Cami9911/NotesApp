@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="./main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" href="#">
+    <script src="https://kit.fontawesome.com/7601e35f17.js" crossorigin="anonymous"></script>
+    <title>To Do List</title>
+</head>
+
+<body>
+    <div id="mySidebar" class="sidebar">
+        <div class="sidebarButtons">
+            <a class="openbtn" id="openbtn" onmouseover="openNav()">&#9776; </a>
+            <a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
+        </div>
+
+
+        <a href="main.html">
+            <div class="row" id="sidebarOption1">
+                <i class="fa-solid fa-house sidebarIcons" id="houseIcon"></i>
+                <p id="sidebarTitle1" class="sidebarTitle">Home</p>
+            </div>
+        </a>
+
+        <a href="notes.html">
+            <div class="row" id="sidebarOption2">
+                <i class="fa-regular fa-note-sticky sidebarIcons"></i>
+                <p id="sidebarTitle2" class="sidebarTitle">My Notes</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="row" id="sidebarOption3">
+                <i class="fa-regular fa-calendar-check sidebarIcons"></i>
+                <p id="sidebarTitle3" class="sidebarTitle">To-do list</p>
+            </div>
+        </a>
+        <a href="#">
+            <div class="row" id="sidebarOption4">
+                <i class="fa-regular fa-clipboard sidebarIcons"></i>
+                <p id="sidebarTitle4" class="sidebarTitle">Projects</p>
+            </div>
+        </a>
+    </div>
+
+    <div id="main" onmouseover="closeNav()">
+
+        <div class="note-panel" style="display: table;">
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'allNotes')" id="defaultOpen">
+                    <i class="fa-regular fa-note-sticky tabIcons"></i>All Notes
+                </button>
+                <button class="tablinks" onclick="openTab(event, 'Images')" id="imagesTab">
+                    <i class="fa-regular fa-image tabIcons"></i>Images
+                </button>
+                <button class="tablinks" onclick="openTab(event, 'Documents')">
+                    <i class="fa-regular fa-file-word tabIcons"></i>Documents
+                </button>
+            </div>
+
+            <div id="allNotes" class="tabcontent">
+                <div class="note-grid" id="note-grid-all-notes">
+                    <!-- <div class="note-item" onmouseover="displayIcon('deleteIcon')" onmouseout="hideIcon('deleteIcon')">
+                        <i class="fa-solid fa-trash deleteIcon" id="deleteIcon" name='deleteIcon'
+                            onclick="deleteNote(this)"></i>
+                        <i class="fa-solid fa-edit editIcon" id="editIcon" name='editIcon'
+                            onclick="displayModal('editNoteModal','closeEditModal', null)"></i>
+                        <p class="note-title" id="note-title">Title</p>
+                        <p class="note-content" id="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing
+                            elit. Ipsa, culpa
+                            nemo
+                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
+                            placeat eligendi modi? Modi, in!</p>
+                    </div> -->
+                </div>
+            </div>
+
+
+            <div id="Images" class="tabcontent">
+                <div class="note-grid" id="note-grid-images">
+                    <img src="./duk.jpg" alt="cdfsdg" style="width:128px;height:128px;">
+
+                </div>
+            </div>
+
+            <div id="Documents" class="tabcontent">
+                <div class="note-grid" id="note-grid-documents">
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="fixed-button">
+            <button class="add-button" id="addNewNoteBtn" onclick="openDropdown()">
+                <i class="fa-solid fa-plus"></i>
+                <p class="label-button">New</p>
+            </button>
+            <div id="addDropdown" class="dropdown-content">
+                <a href="#" class="dropItem" onclick="displayModal('addNewNoteModal', 'closeModal', null)">Note</a>
+                <a href="#" class="dropItem">Image</a>
+                <a href="#" class="dropItem">Document</a>
+            </div>
+        </div>
+        <div id="addNewNoteModal" class="modal">
+            <span class="closeModal">&times;</span>
+            <div class="modal-content">
+                <div class="note-form">
+                    <div class="modal-header">
+                        <p class="formTitle">Add a new note</p>
+                        <div>
+                            <i class="fa-regular fa-heart iconHeart" id="favUnselected"
+                                onclick="enableIcon('favSelected','favUnselected')"></i>
+                            <i class="fa-solid fa-heart iconHeart" id="favSelected"
+                                onclick="disableIcon('favUnselected','favSelected')"></i>
+                            <i class="fa-regular fa-star" id="impUnselected"
+                                onclick="enableIcon('impSelected','impUnselected')"></i>
+                            <i class="fa-solid fa-star" id="impSelected"
+                                onclick="disableIcon('impUnselected','impSelected')"></i>
+                        </div>
+                    </div>
+                    <form class="addNewNoteForm" method="POST" id="addNewNoteForm">
+                        <div class="inputNote">
+                            <input type="text" id="noteTitle" class="inputForm" name="title" value="" placeholder="Title">
+                        </div>
+                        <div class="inputNote">
+                            <textarea id="noteContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
+                        </div>
+                        <input type="submit" value="Submit" id="submit" onclick="getFormValues(event)">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="editNoteModal" class="editNoteModal">
+            <span class="closeEditModal">&times;</span>
+            <div class="modal-content">
+                <div class="note-form">
+                    <p class="formTitle">Edit note</p>
+                    <form class="editNoteForm" method="POST" id="editNoteForm">
+                        <div class="inputNote">
+                            <i class="fa-solid fa-pen editIcon" aria-hidden="true"></i>
+                            <input type="text" id="editTitle" class="inputForm" name="title" value="" placeholder="Title">
+                        </div>
+                        <div class="inputNote">
+                            <textarea id="editContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
+                        </div>
+                        <input type="cancel" value="Cancel" id="cancelNote" onclick="closeModal('editNoteModal')">
+                        <input type="submit" value="Save" id="saveNote" onclick="updateNote(event)">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script defer src="./main.js"></script>
+</body>
+
+</html>

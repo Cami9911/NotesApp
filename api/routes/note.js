@@ -4,7 +4,7 @@ const Note = require('../models/note')
 
 module.exports = router;
 
-router.get('/notes', async (req, res) => {
+router.get('/all-notes', async (req, res) => {
   await Note.find().sort({ createdAt: 'desc' })
     .then((result) => {
       res.send(result)
@@ -88,4 +88,19 @@ router.put('/update-note/:id', (req, res) => {
     .catch(err => {
       console.log(err);
     });
+});
+
+router.get('/search-note', (req, res) => {
+
+  const search = {
+    search: req.body.search,
+  }
+
+  Note.find({ $text: { $search: "lorem" } })
+  .then(result => {
+    res.send(result)
+  })
+  .catch(err => {
+    console.log(err);
+  });
 });

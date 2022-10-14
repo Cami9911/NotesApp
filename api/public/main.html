@@ -23,28 +23,29 @@
             <a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
         </div>
 
-        <a href="#">
+        <a href="main.html">
             <div class="row" id="sidebarOption1">
-                <i class="fa-regular fa-note-sticky sidebarIcons"></i>
-                <p id="sidebarTitle1" class="sidebarTitle">My Notes</p>
+                <i class="fa-solid fa-house sidebarIcons" id="houseIcon"></i>
+                <p id="sidebarTitle1" class="sidebarTitle">Home</p>
             </div>
         </a>
-        <a href="#">
+
+        <a href="notes.html">
             <div class="row" id="sidebarOption2">
-                <i class="fa-regular fa-calendar-check sidebarIcons"></i>
-                <p id="sidebarTitle2" class="sidebarTitle">To-do list</p>
+                <i class="fa-regular fa-note-sticky sidebarIcons"></i>
+                <p id="sidebarTitle2" class="sidebarTitle">My Notes</p>
             </div>
         </a>
-        <a href="#">
+        <a href="#" onclick="goToImages()">
             <div class="row" id="sidebarOption3">
-                <i class="fa-regular fa-clipboard sidebarIcons"></i>
-                <p id="sidebarTitle3" class="sidebarTitle">Projects</p>
+                <i class="fa-regular fa-calendar-check sidebarIcons"></i>
+                <p id="sidebarTitle3" class="sidebarTitle">Images</p>
             </div>
         </a>
         <a href="#">
             <div class="row" id="sidebarOption4">
-                <i class="fa-regular fa-file-lines sidebarIcons"></i>
-                <p id="sidebarTitle4" class="sidebarTitle">Journal</p>
+                <i class="fa-regular fa-clipboard sidebarIcons"></i>
+                <p id="sidebarTitle4" class="sidebarTitle">Projects</p>
             </div>
         </a>
     </div>
@@ -94,13 +95,13 @@
             <p class="title-panel">Notes<i class="fa-solid fa-feather checkIcon"></i></p>
 
             <div class="tab">
-                <button class="tablinks" onclick="openCity(event, 'Recently')" id="defaultOpen">
+                <button class="tablinks" onclick="openTab(event, 'Recently')" id="defaultOpen">
                     <i class="fa-regular fa-clock tabIcons"></i>Recently
                 </button>
-                <button class="tablinks" onclick="openCity(event, 'Important')">
+                <button class="tablinks" onclick="openTab(event, 'Important')">
                     <i class="fa-solid fa-triangle-exclamation tabIcons"></i>Important
                 </button>
-                <button class="tablinks" onclick="openCity(event, 'Favorites')">
+                <button class="tablinks" onclick="openTab(event, 'Favorites')">
                     <i class="fa-regular fa-heart tabIcons"></i>Favorites
                 </button>
             </div>
@@ -142,7 +143,7 @@
             </button>
             <div id="addDropdown" class="dropdown-content">
                 <a href="#" class="dropItem" onclick="displayModal('addNewNoteModal', 'closeModal', null)">Note</a>
-                <a href="#" class="dropItem">Image</a>
+                <a href="#" class="dropItem" onclick="displayModal('addImageModal', 'closeImgModal', null)">Image</a>
                 <a href="#" class="dropItem">Document</a>
             </div>
         </div>
@@ -162,10 +163,10 @@
                     </div>
                     <form class="addNewNoteForm" method="POST" id="addNewNoteForm">
                         <div class="inputNote">
-                            <input type="text" id="noteTitle" name="title" value="" placeholder="Title">
+                            <input type="text" id="noteTitle" class="inputForm" name="title" value="" placeholder="Title">
                         </div>
                         <div class="inputNote">
-                            <textarea id="noteContent" name="content" value="" placeholder="Content"></textarea>
+                            <textarea id="noteContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
                         </div>
                         <input type="submit" value="Submit" id="submit" onclick="getFormValues(event)">
                     </form>
@@ -181,15 +182,28 @@
                     <form class="editNoteForm" method="POST" id="editNoteForm">
                         <div class="inputNote">
                             <i class="fa-solid fa-pen editIcon" aria-hidden="true"></i>
-                            <input type="text" id="editTitle" name="title" value="" placeholder="Title">
+                            <input type="text" id="editTitle" class="inputForm" name="title" value="" placeholder="Title">
                         </div>
                         <div class="inputNote">
-                            <textarea id="editContent" name="content" value="" placeholder="Content"></textarea>
+                            <textarea id="editContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
                         </div>
                         <input type="cancel" value="Cancel" id="cancelNote" onclick="closeModal('editNoteModal')">
                         <input type="submit" value="Save" id="saveNote" onclick="updateNote(event)">
                     </form>
                 </div>
+            </div>
+        </div>
+
+        <div id="addImageModal" class="addImageModal">
+            <span class="closeImgModal">&times;</span>
+            <div class="modal-content">
+                <p class="formTitle">Add a new image</p>
+                <form action="/add-image" method="POST" class="formImage" enctype="multipart/form-data">
+                    <label for="image">Select image:</label>
+                    <input type="file" id="image" name="image" class="inputForm">
+                    <input type="cancel" value="Cancel" id="cancelImage" onclick="closeModal('addImageModal')">
+                    <input type="submit" id="saveImage">
+                </form>
             </div>
         </div>
 

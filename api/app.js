@@ -3,6 +3,11 @@ var bodyParser = require("body-parser")
 const mongoose = require('mongoose');
 const noteRouter = require('./routes/note')
 const Note = require('./models/note')
+const Image = require('./models/image')
+
+var fs = require('fs');
+var path = require('path');
+// require('dotenv/config');
 
 const app = express();
 
@@ -12,7 +17,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-const dbURI = 'mongodb+srv://camelia:TIC8bwGtHW7rj4sE@cluster0.66mkkg3.mongodb.net/NotesAppDB?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://camelia:e1oLWGf0nbSxgsnr@cluster0.66mkkg3.mongodb.net/NotesAppDB?retryWrites=true&w=majority';
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => app.listen(3000))
@@ -23,6 +28,51 @@ app.use('/', noteRouter);
 app.get('/', async (req, res) => {
   res.redirect('main.html');
 });
+
+var multer = require('multer');
+  
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+  
+var upload = multer({ storage: storage });
+
+app.post('/add-image', upload.single('image'), (req, res, next) => {
+
+    var obj = {
+      // name: req.body.name,
+      // desc: req.body.desc,
+      image: {
+          data: fs.readFileSync(path.join(__dirname + '/uploads/' + req?.file?.filename)),
+          contentType: 'image/png'
+      }
+  }
+  Image.create(obj, (err, item) => {
+      if (err) {
+          console.log(err);
+      }
+      else {
+          // item.save();
+          res.redirect('/');
+      }
+  });
+});
+
+app.get('/get-image', (req, res) => {
+  Image.find()
+    .then((result) => {
+      res.send(result)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+});
+
 
 // app.get('/notes', async (req, res) => {
 //   await Note.find().sort({ createdAt: 'desc' })

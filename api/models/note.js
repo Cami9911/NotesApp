@@ -5,10 +5,12 @@ const noteSchema = new Schema({
   title: {
     type: String,
     required: true,
+    text:true,
   },
   content: {
     type: String,
-    required: true
+    required: true,
+    text:true,
   },
   important: {
     type: Boolean,

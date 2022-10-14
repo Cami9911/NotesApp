@@ -37,7 +37,7 @@ function displayIcon(id) {
 }
 
 
-function openCity(evt, cityName) {
+function openTab(evt, cityName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -50,7 +50,8 @@ function openCity(evt, cityName) {
   getStyleElementById(cityName).display = "block";
   evt.currentTarget.className += " active";
 }
-document.getElementById("defaultOpen").click();
+if(document.getElementById("defaultOpen"))
+  document.getElementById("defaultOpen").click();
 
 
 function displayModal(idModal, classModal, noteID) {
@@ -86,6 +87,25 @@ function displayModal(idModal, classModal, noteID) {
 
 function closeModal(idModal) {
   getStyleElementById(idModal).display = "none";
+}
+function toBase64(arr) {
+  //arr = new Uint8Array(arr) if it's an ArrayBuffer
+  return btoa(
+     arr.reduce((data, byte) => data + String.fromCharCode(byte), '')
+  );
+}
+
+function displayImages(images, gridId){
+  images.forEach(img => {
+
+    console.log(img.image)
+
+    const image = document.createElement("div");
+    image.innerHTML = `<img src="data:${img.image.contentType};base64,${toBase64(img.image.data.data)}" style="width:128px;height:128px;"></img>`;
+
+    const imgGrid = document.getElementById(gridId);
+    imgGrid.appendChild(image);
+  })
 }
 
 function getNotes(notes, gridId) {
@@ -140,12 +160,23 @@ window.addEventListener("load", function () {
   getData('recent-notes', "note-grid-recently");
   getData('favourite-notes', "note-grid-favourite")
   getData('important-notes', "note-grid-important")
+  getData('all-notes', "note-grid-all-notes")
+  getImages('get-image', "note-grid-images")
 });
 
 async function getData(url, gridId) {
   try {
     let res = await fetch('http://localhost:3000/' + url);
     getNotes(await res.json(), gridId);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getImages(url, gridId) {
+  try {
+    let res = await fetch('http://localhost:3000/' + url);
+    displayImages(await res.json(), gridId);
   } catch (error) {
     console.log(error);
   }
@@ -261,4 +292,9 @@ function enableIcon(iconEnable,iconDisable){
 function disableIcon(iconEnable,iconDisable){
   document.getElementById(iconDisable).style.display = "none";
   document.getElementById(iconEnable).style.display = "inline-block";
+}
+
+function goToImages(){
+  window.location = 'notes.html';
+  document.getElementById("notesTab").click();
 }

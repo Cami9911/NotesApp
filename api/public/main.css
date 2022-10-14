@@ -50,12 +50,12 @@ header,
 }
 
 .combobox input {
-  width: 50%;
+  width: 684px;
   padding: 5px;
   font-size: 20px;
   border: none;
   background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
+  border-radius: 7px;
   /* box-shadow: 0px 0px 20px 7px  rgba(128, 128, 128, 0.2); */
 }
 
@@ -79,13 +79,14 @@ div #optionsList {
 }
 
 .quick-tips {
-  width: 52%;
+  display: table;
+  width: 46%;
   margin-top: 3%;
   /* height: 410px; */
   margin-left: 5%;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
-  padding: 19px 0px 19px 0;
+  padding: 19px 19px 19px 0;
 }
 
 .tipsHeader {
@@ -174,8 +175,9 @@ div #optionsList {
 }
 
 .note-panel {
+  overflow: hidden;
   width: 90%;
-  height: 400px;
+  height: 389px;
   margin-top: 3%;
   margin-left: 5%;
   background-color: rgba(255, 255, 255, 0.8);
@@ -185,7 +187,7 @@ div #optionsList {
 
 .note-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
   justify-content: start;
   gap: 20px;
   padding: 20px;
@@ -195,7 +197,7 @@ div #optionsList {
   background-color: white;
   font-size: 15px;
   padding: 10px;
-  width: 150px;
+  width: 145px;
   height: 250px;
   color: black;
   border-radius: 10px;
@@ -347,6 +349,7 @@ p.title-panel {
 #openbtn {
   font-size: 25px;
   cursor: pointer;
+  margin-left: 2px;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -364,6 +367,10 @@ p.title-panel {
 
 .sidebarIcons {
   font-size: 25px !important;
+}
+
+#houseIcon{
+  font-size: 22px!important;
 }
 
 .tabIcons {
@@ -444,12 +451,13 @@ p.title-panel {
 /* Style the tab content */
 .tabcontent {
   display: none;
-  padding: 6px 12px;
+  padding: 6px 0px;
 }
 
 /* The Modal (background) */
 .modal,
-.editNoteModal {
+.editNoteModal,
+.addImageModal {
   display: none;
   /* Hidden by default */
   position: fixed;
@@ -526,10 +534,7 @@ p.title-panel {
 }
 
 /* Form */
-#noteTitle,
-#noteContent,
-#editContent,
-#editTitle {
+.inputForm {
   border: none;
   width: 80%;
   height: 35px;
@@ -574,7 +579,9 @@ textarea::placeholder {
 
 #submit,
 #saveNote,
-#cancelNote {
+#cancelNote,
+#saveImage,
+#cancelImage {
   padding: 10px;
   width: 210px;
   border-radius: 17px;
@@ -590,13 +597,19 @@ textarea::placeholder {
   margin-left: 25%;
 }
 
-#cancelNote {
+#cancelNote, #cancelImage {
   bottom: 250px;
   width: 190px;
   text-align: center;
 }
 
-#saveNote {
+#cancelImage{
+  left: 36%;
+}
+#saveImage{
+  left: 561px;
+}
+#saveNote, #saveImage {
   bottom: 250px;
   margin-left: 15%;
   width: 190px;
@@ -604,7 +617,9 @@ textarea::placeholder {
 
 #submit:hover,
 #saveNote:hover,
-#cancelNote:hover {
+#cancelNote:hover,
+#saveImage:hover, 
+#cancelImage:hover{
   background: #8181814f;
   color: rgba(245, 245, 245, 0.823);
 }
@@ -627,4 +642,22 @@ textarea::placeholder {
 :hover:-moz-placeholder {
   /* Firefox 18- */
   color: #cdcdcd97;
+}
+
+.formImage{
+  margin-top: 30px;
+}
+
+.formImage label{
+  font-size: 15px;
+}
+
+.inputForm::before{
+  border: none;
+  width: 80%;
+  height: 35px;
+  border-radius: 10px;
+  background-color: #ec8181;
+  color: #525252;
+  text-decoration: none;
 }
