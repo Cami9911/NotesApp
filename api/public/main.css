@@ -136,6 +136,11 @@ div #optionsList {
   font-size: 24px;
 }
 
+.tipsIconRightModal{
+  margin-left: 83%;
+  font-size: 24px;
+}
+
 .tipsTitle {
   font-size: 15px;
   margin-left: 5%;
@@ -150,6 +155,14 @@ div #optionsList {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #818181;
+}
+.tipsExplanations{
+  width: 70%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5px;
+  font-size: 15px;
   color: #818181;
 }
 
@@ -391,6 +404,13 @@ p.title-panel {
   font-size: 15px;
 }
 
+.editIconTitle{
+  position: absolute;
+  font-size: 11px;
+  margin-left: 83px;
+  margin-top: 7px;
+}
+
 .deleteIcon {
   margin-left: 115px;
   color: rgba(101, 164, 122, 0.784);
@@ -455,29 +475,18 @@ p.title-panel {
 }
 
 /* The Modal (background) */
-.modal,
-.editNoteModal,
-.addImageModal {
+.modal {
   display: none;
-  /* Hidden by default */
   position: fixed;
-  /* Stay in place */
   z-index: 1;
-  /* Sit on top */
   padding-top: 100px;
-  /* Location of the box */
   left: 0;
   top: 0;
   width: 100%;
-  /* Full width */
   height: 100%;
-  /* Full height */
   overflow: auto;
-  /* Enable scroll if needed */
   background-color: rgb(0, 0, 0);
-  /* Fallback color */
   background-color: rgba(0, 0, 0, 0.7);
-  /* Black w/ opacity */
 }
 
 /* Modal Content */
@@ -491,6 +500,45 @@ p.title-panel {
   border-radius: 10px;
   color: #525252;
   box-shadow: 8px 12px 15px -3px rgb(39 39 39 / 47%);
+}
+
+.tipsModal{
+  background-color: #eeeeee;
+  margin: auto;
+  padding: 20px;
+  border: none;
+  width: 40%;
+  height: 60%;
+  border-radius: 10px;
+  color: #000000;
+  box-shadow: 8px 12px 15px -3px rgb(39 39 39 / 47%);
+}
+
+.imgModal{
+  background-color: #eeeeee;
+  margin: auto;
+  padding: 20px;
+  border: none;
+  width: 50%;
+  height: 85%;
+  border-radius: 10px;
+  color: #000000;
+  box-shadow: 8px 12px 15px -3px rgb(39 39 39 / 47%);
+}
+
+.imageDim{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tipsModalTitle{
+  color: #000000;
+}
+
+.imgTips{
+  border-radius: 7px!important;
+  height:100px;
 }
 
 .modal-header{
@@ -512,7 +560,7 @@ p.title-panel {
 
 
 /* The Close Button */
-.closeModal {
+.closeModal, .closeTipsImgModal, .closeEditModal, .closeSeeImageModal {
   color: #818181;
   font-weight: bold;
   font-size: 52px;
@@ -522,7 +570,13 @@ p.title-panel {
 }
 
 .closeModal:hover,
-.closeModal:focus {
+.closeModal:focus,
+.closeTipsImgModal:hover,
+.closeTipsImgModal:focus,
+.closeEditModal:hover,
+.closeEditModal:focus,
+.closeSeeImageModal:hover,
+.closeSeeImageModal:focus {
   color: #ec818182;
   text-decoration: none;
   cursor: pointer;

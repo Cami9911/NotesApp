@@ -55,8 +55,8 @@ if(document.getElementById("defaultOpen"))
 
 
 function displayModal(idModal, classModal, noteID) {
-  document.getElementsByClassName("dropdown-content")[0].classList.remove('show');
 
+  document.getElementsByClassName("dropdown-content")[0].classList.remove('show');
 
   if (noteID) {
     document.getElementsByClassName('note-form').id = noteID;
@@ -98,14 +98,20 @@ function toBase64(arr) {
 function displayImages(images, gridId){
   images.forEach(img => {
 
-    console.log(img.image)
-
     const image = document.createElement("div");
-    image.innerHTML = `<img src="data:${img.image.contentType};base64,${toBase64(img.image.data.data)}" style="width:128px;height:128px;"></img>`;
+    image.style.height = "150px";
+    image.innerHTML = `<img src="data:${img.image.contentType};base64,${toBase64(img.image.data.data)}" class="imageDim" onclick='seeImage(${JSON.stringify(img)})'></img>`;
 
     const imgGrid = document.getElementById(gridId);
-    imgGrid.appendChild(image);
+    imgGrid?.appendChild(image);
   })
+}
+
+function seeImage(img){
+  const image = document.getElementById("imgModal");
+  image.innerHTML = `<img src="data:${img.image.contentType};base64,${toBase64(img.image.data.data)}" class="imageDim"></img>`;
+
+  displayModal('seeImageModal', 'closeSeeImageModal', null);
 }
 
 function getNotes(notes, gridId) {
@@ -152,7 +158,7 @@ function getNotes(notes, gridId) {
 
 
     const noteGrid = document.getElementById(gridId);
-    noteGrid.appendChild(item);
+    noteGrid?.appendChild(item);
   });
 }
 
@@ -162,7 +168,22 @@ window.addEventListener("load", function () {
   getData('important-notes', "note-grid-important")
   getData('all-notes', "note-grid-all-notes")
   getImages('get-image', "note-grid-images")
+
+  openTabParam('images','imgTab')
+  openTabParam('documents','docTab')
 });
+
+function openTabParam(reqParam, idTab){
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get('tab');
+  var doc = document.getElementById(idTab);
+
+  if(myParam == reqParam && doc){
+    doc.click();
+  }
+
+}
 
 async function getData(url, gridId) {
   try {
@@ -294,7 +315,8 @@ function disableIcon(iconEnable,iconDisable){
   document.getElementById(iconEnable).style.display = "inline-block";
 }
 
-function goToImages(){
-  window.location = 'notes.html';
-  document.getElementById("notesTab").click();
+function goToTab(param){
+  const urlParams = new URL("http://localhost:3000/notes.html");
+  urlParams.searchParams.set('tab', param);
+  window.location = urlParams;
 }

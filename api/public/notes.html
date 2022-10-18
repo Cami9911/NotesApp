@@ -52,15 +52,15 @@
 
     <div id="main" onmouseover="closeNav()">
 
-        <div class="note-panel" style="display: table;">
+        <div class="note-panel" style="display: table; height: 250px;">
             <div class="tab">
                 <button class="tablinks" onclick="openTab(event, 'allNotes')" id="defaultOpen">
                     <i class="fa-regular fa-note-sticky tabIcons"></i>All Notes
                 </button>
-                <button class="tablinks" onclick="openTab(event, 'Images')" id="imagesTab">
+                <button class="tablinks imgTab" onclick="openTab(event, 'Images')" id="imgTab">
                     <i class="fa-regular fa-image tabIcons"></i>Images
                 </button>
-                <button class="tablinks" onclick="openTab(event, 'Documents')">
+                <button class="tablinks" onclick="openTab(event, 'Documents')" id="docTab">
                     <i class="fa-regular fa-file-word tabIcons"></i>Documents
                 </button>
             </div>
@@ -85,8 +85,6 @@
 
             <div id="Images" class="tabcontent">
                 <div class="note-grid" id="note-grid-images">
-                    <img src="./duk.jpg" alt="cdfsdg" style="width:128px;height:128px;">
-
                 </div>
             </div>
 
@@ -139,7 +137,7 @@
             </div>
         </div>
 
-        <div id="editNoteModal" class="editNoteModal">
+        <div id="editNoteModal" class="modal">
             <span class="closeEditModal">&times;</span>
             <div class="modal-content">
                 <div class="note-form">
@@ -157,6 +155,11 @@
                     </form>
                 </div>
             </div>
+        </div>
+
+        <div id="seeImageModal" class="modal">
+            <span class="closeSeeImageModal">&times;</span>
+            <div class="imgModal" id="imgModal"></div>
         </div>
     </div>
     <script defer src="./main.js"></script>
