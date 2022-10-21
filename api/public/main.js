@@ -54,7 +54,7 @@ if(document.getElementById("defaultOpen"))
   document.getElementById("defaultOpen").click();
 
 
-function displayModal(idModal, classModal, noteID) {
+function displayModal(idModal, idCloseModal, noteID) {
 
   document.getElementsByClassName("dropdown-content")[0].classList.remove('show');
 
@@ -69,7 +69,7 @@ function displayModal(idModal, classModal, noteID) {
   }
 
   var modal = document.getElementById(idModal);
-  var span = document.getElementsByClassName(classModal)[0];
+  var span = document.getElementById(idCloseModal);
 
 
   modal.style.display = "block";
@@ -117,7 +117,6 @@ function seeImage(img){
 function getNotes(notes, gridId) {
 
   notes.forEach(note => {
-
     var noteID = note._id;
 
     const title = document.createElement("p");
@@ -130,32 +129,13 @@ function getNotes(notes, gridId) {
     content.id = 'note-content' + noteID;
     content.innerText = note.content;
 
-    var iconDelete = document.createElement("i");
-    iconDelete.className = "fa-solid fa-trash deleteIcon"
-    iconDelete.id = noteID;
-    iconDelete.style.display = 'none';
-    iconDelete.addEventListener("click", function () { deleteData('delete-note', noteID); }, false)
-
-    var iconEdit = document.createElement("i");
-    iconEdit.className = "fa-solid fa-edit editIcon"
-    iconEdit.id = 'edit' + noteID;
-    iconEdit.style.display = 'none';
-    iconEdit.addEventListener("click", function () { displayModal('editNoteModal', 'closeEditModal', noteID); }, false)
-    // iconEdit.innerHTML = `<i class="fa-solid fa-edit editIcon" aria-hidden="true" onclick="displayModal('editNoteModal','closeEditModal')" id=${noteID}></i>`;
-
     const item = document.createElement('div');
     item.classList.add("note-item");
+    
+    createDeleteEditAndDate(note, noteID, item, 'delete-note', 'editNoteModal', 'closeEditModal');
 
-    item.appendChild(iconEdit);
-    item.appendChild(iconDelete);
     item.appendChild(title);
     item.appendChild(content);
-
-    item.addEventListener("mouseover", function () { displayIcon(noteID) });
-    item.addEventListener('mouseout', function () { hideIcon(noteID) });
-    item.addEventListener("mouseover", function () { displayIcon('edit' + noteID) });
-    item.addEventListener('mouseout', function () { hideIcon('edit' + noteID) });
-
 
     const noteGrid = document.getElementById(gridId);
     noteGrid?.appendChild(item);
@@ -168,9 +148,10 @@ window.addEventListener("load", function () {
   getData('important-notes', "note-grid-important")
   getData('all-notes', "note-grid-all-notes")
   getImages('get-image', "note-grid-images")
+  getLists('all-lists', "note-grid-lists")
 
   openTabParam('images','imgTab')
-  openTabParam('documents','docTab')
+  openTabParam('lists','listTab')
 });
 
 function openTabParam(reqParam, idTab){
@@ -198,6 +179,15 @@ async function getImages(url, gridId) {
   try {
     let res = await fetch('http://localhost:3000/' + url);
     displayImages(await res.json(), gridId);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getLists(url, gridId) {
+  try {
+    let res = await fetch('http://localhost:3000/' + url);
+    displayLists(await res.json(), gridId);
   } catch (error) {
     console.log(error);
   }
@@ -319,4 +309,178 @@ function goToTab(param){
   const urlParams = new URL("http://localhost:3000/notes.html");
   urlParams.searchParams.set('tab', param);
   window.location = urlParams;
+}
+
+function remove(e){
+  e.parentNode.parentNode.removeChild(e.parentNode);
+}
+
+var i=1;
+function createNewItemList(){
+  var div = document.createElement('div');
+  div.style.display = 'flex';
+
+  var checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.name = 'checkboxItem'+i;
+  checkbox.classList.add('checkboxList');
+  checkbox.addEventListener("click", function () { checkText(checkbox, input) }, false);
+
+  var input = document.createElement('input');
+  input.classList.add('inputForm');
+  input.name = 'content'+i;
+
+  var remove = document.createElement('i');
+  remove.className ="fa-solid fa-xmark removeItemList";
+  remove.addEventListener("click", function () { div.remove() }, false);
+
+  div.appendChild(checkbox);
+  div.appendChild(input);
+  div.appendChild(remove);
+
+  var button = document.getElementById('addListItem');
+  button.parentNode.insertBefore(div, button)
+  i++;
+}
+
+function checkText(checkbox, input){
+  if(!input)
+    var input = document.getElementById('noteContent1')
+
+  if(checkbox.checked){
+    input.style.textDecoration = 'line-through'
+  }
+  else{
+    input.style.textDecoration = 'none'
+  }
+}
+
+function getListValues(event) {
+  event.preventDefault();
+
+  var favourite = false;
+  var important = false;
+
+  const formData = new FormData(document.getElementById('addNewListForm'));
+  const data = Object.fromEntries(formData);
+
+  var contentArr = {};
+  var checkedArr = {};
+  var sendData = {};
+
+  console.log('data', data)
+
+  var j=0, k=0;
+  for (var i in data){
+    console.log(i)
+    if(i.includes('content')){
+      contentArr[j] = data[i];
+      j++
+    }
+    else
+    if(i.includes('checkboxItem')){
+      checkedArr[j] = data[i];
+      k++
+    }
+  }
+
+  if(getStyleElementById("favSelected1").display == "inline-block"){
+    favourite = true;
+  }
+  if(getStyleElementById("impSelected1").display == "inline-block"){
+    important = true;
+  }
+
+  data["favourite"] = favourite;
+  data["important"] = important;
+
+  sendData = {
+    'title': data.title,
+    'content': contentArr,
+    'checked': checkedArr,
+    'important': important,
+    'favourite': favourite
+  }
+
+  postData(sendData, 'add-list')
+}
+
+function displayLists(allLists, gridId) {
+
+  allLists.forEach(list => {
+    const item = document.createElement('div');
+    item.classList.add("note-item");
+    var listID = list._id;
+
+    const title = document.createElement("p");
+    title.classList.add("note-title");
+    title.id = 'list-title' + listID;
+    title.innerText = list.title;
+
+    item.appendChild(title);
+
+    for (var key in list.content) {
+
+      var div = document.createElement('div');
+      div.style.display = 'flex';
+      div.className = 'list-content'
+
+      var checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.disabled = true;
+      checkbox.classList.add('checkboxListView');
+      checkbox.addEventListener("click", function () { checkText(checkbox, input) }, false);
+
+      if (list.checked[key]) {
+        checkbox.checked = true;
+      } else {
+        checkbox.checked = false;
+      }
+
+      var input = document.createElement('p');
+      input.innerText = list.content[key];
+
+      div.appendChild(checkbox);
+      div.appendChild(input);
+
+      item.appendChild(div);
+
+    }
+
+    createDeleteEditAndDate(list, listID, item);
+
+    const listGrid = document.getElementById(gridId);
+    listGrid?.appendChild(item);
+  })
+
+}
+
+function createDeleteEditAndDate(item, itemID, parent, idDelNote, idEditNote, idCloseModal) {
+  const date = document.createElement('p');
+  date.classList.add("note-date");
+  var d = new Date(item.createdAt)
+  date.innerText = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
+
+  var iconDelete = document.createElement("i");
+  iconDelete.className = "fa-solid fa-trash deleteIcon"
+  iconDelete.id = itemID;
+  iconDelete.style.display = 'none';
+  iconDelete.style.top = '10px';
+  iconDelete.addEventListener("click", function () { deleteData(idDelNote, itemID); }, false)
+
+  var iconEdit = document.createElement("i");
+  iconEdit.className = "fa-solid fa-edit editIcon"
+  iconEdit.id = 'edit' + itemID;
+  iconEdit.style.display = 'none';
+  iconEdit.style.top = '10px';
+  iconEdit.addEventListener("click", function () { displayModal(idEditNote, idCloseModal, itemID); }, false)
+
+  parent.addEventListener("mouseover", function () { displayIcon(itemID) });
+  parent.addEventListener('mouseout', function () { hideIcon(itemID) });
+  parent.addEventListener("mouseover", function () { displayIcon('edit' + itemID) });
+  parent.addEventListener('mouseout', function () { hideIcon('edit' + itemID) });
+
+  parent.appendChild(date)
+  parent.appendChild(iconDelete)
+  parent.appendChild(iconEdit)
 }

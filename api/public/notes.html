@@ -60,8 +60,8 @@
                 <button class="tablinks imgTab" onclick="openTab(event, 'Images')" id="imgTab">
                     <i class="fa-regular fa-image tabIcons"></i>Images
                 </button>
-                <button class="tablinks" onclick="openTab(event, 'Documents')" id="docTab">
-                    <i class="fa-regular fa-file-word tabIcons"></i>Documents
+                <button class="tablinks" onclick="openTab(event, 'Lists')" id="listTab">
+                    <i class="fa-regular fa-file-word tabIcons"></i>Lists
                 </button>
             </div>
 
@@ -88,8 +88,8 @@
                 </div>
             </div>
 
-            <div id="Documents" class="tabcontent">
-                <div class="note-grid" id="note-grid-documents">
+            <div id="Lists" class="tabcontent">
+                <div class="note-grid" id="note-grid-lists">
                 </div>
             </div>
 
@@ -104,7 +104,7 @@
             <div id="addDropdown" class="dropdown-content">
                 <a href="#" class="dropItem" onclick="displayModal('addNewNoteModal', 'closeModal', null)">Note</a>
                 <a href="#" class="dropItem">Image</a>
-                <a href="#" class="dropItem">Document</a>
+                <a href="#" class="dropItem">List</a>
             </div>
         </div>
         <div id="addNewNoteModal" class="modal">
@@ -138,7 +138,7 @@
         </div>
 
         <div id="editNoteModal" class="modal">
-            <span class="closeEditModal">&times;</span>
+            <span class="closeModal" id="closeEditModal">&times;</span>
             <div class="modal-content">
                 <div class="note-form">
                     <p class="formTitle">Edit note</p>
@@ -150,15 +150,17 @@
                         <div class="inputNote">
                             <textarea id="editContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
                         </div>
-                        <input type="cancel" value="Cancel" id="cancelNote" onclick="closeModal('editNoteModal')">
-                        <input type="submit" value="Save" id="saveNote" onclick="updateNote(event)">
+                        <div class="space-around">
+                            <input type="cancel" value="Cancel" class="modalBtn" id="cancelNote" onclick="closeModal('editNoteModal')">
+                            <input type="submit" value="Save" class="modalBtn" id="saveNote" onclick="updateNote(event)">
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
 
         <div id="seeImageModal" class="modal">
-            <span class="closeSeeImageModal">&times;</span>
+            <span class="closeModal" id="closeSeeImageModal">&times;</span>
             <div class="imgModal" id="imgModal"></div>
         </div>
     </div>

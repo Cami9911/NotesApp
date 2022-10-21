@@ -170,7 +170,7 @@ div #optionsList {
   color: rgb(57, 142, 253);
 }
 
-.documentIcons {
+.listIcons {
   color: rgb(143, 229, 172);
 }
 
@@ -207,6 +207,7 @@ div #optionsList {
 }
 
 .note-item {
+  position: relative;
   background-color: white;
   font-size: 15px;
   padding: 10px;
@@ -230,8 +231,21 @@ div #optionsList {
   margin-top: 10px;
 }
 
+.list-content{
+font-size: 10px;
+margin-top: 5px;
+}
+
 .note-title {
   margin-top: 10px;
+}
+
+.note-date {
+  position: absolute;
+  bottom: 0;
+  font-size: 10px;
+  color: gray;
+  font-style: italic;
 }
 
 p.title-panel {
@@ -550,17 +564,17 @@ p.title-panel {
   margin-right: 5px;
 }
 
-#favSelected, #impSelected{
+#favSelected, #impSelected, #favSelected1, #impSelected1{
   display: none;
 }
 
-#favSelected,#favUnselected, #impSelected, #impUnselected{
+.selectIcon{
   font-size: 18px!important;
 }
 
 
 /* The Close Button */
-.closeModal, .closeTipsImgModal, .closeEditModal, .closeSeeImageModal {
+.closeModal {
   color: #818181;
   font-weight: bold;
   font-size: 52px;
@@ -570,13 +584,7 @@ p.title-panel {
 }
 
 .closeModal:hover,
-.closeModal:focus,
-.closeTipsImgModal:hover,
-.closeTipsImgModal:focus,
-.closeEditModal:hover,
-.closeEditModal:focus,
-.closeSeeImageModal:hover,
-.closeSeeImageModal:focus {
+.closeModal:focus{
   color: #ec818182;
   text-decoration: none;
   cursor: pointer;
@@ -590,12 +598,13 @@ p.title-panel {
 /* Form */
 .inputForm {
   border: none;
-  width: 80%;
+  width: 93%;
   height: 35px;
   border-radius: 10px;
   background-color: #ec8181;
   color: #525252;
   text-decoration: none;
+  margin-left: 3px;
 }
 
 .inputNote textarea:focus,
@@ -631,11 +640,7 @@ textarea::placeholder {
   height: 90%;
 }
 
-#submit,
-#saveNote,
-#cancelNote,
-#saveImage,
-#cancelImage {
+#submit{
   padding: 10px;
   width: 210px;
   border-radius: 17px;
@@ -651,29 +656,7 @@ textarea::placeholder {
   margin-left: 25%;
 }
 
-#cancelNote, #cancelImage {
-  bottom: 250px;
-  width: 190px;
-  text-align: center;
-}
-
-#cancelImage{
-  left: 36%;
-}
-#saveImage{
-  left: 561px;
-}
-#saveNote, #saveImage {
-  bottom: 250px;
-  margin-left: 15%;
-  width: 190px;
-}
-
-#submit:hover,
-#saveNote:hover,
-#cancelNote:hover,
-#saveImage:hover, 
-#cancelImage:hover{
+#submit:hover{
   background: #8181814f;
   color: rgba(245, 245, 245, 0.823);
 }
@@ -715,3 +698,44 @@ textarea::placeholder {
   color: #525252;
   text-decoration: none;
 }
+
+.addListItem{
+  display: flex;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.checkboxList{
+  width: 15px;
+  accent-color: gray;
+}
+
+.checkboxListView{
+  width: 9px;
+  margin-right: 3px;
+}
+
+.removeItemList{
+  margin-top: 10px;
+}
+
+.modalBtn{
+  width: 40%;
+  height: 30px;
+  text-align: center;
+  border-radius: 17px;
+  border: none;
+  background-color: #8181816d;
+  color: #dadada82;
+  cursor: pointer;
+}
+
+.modalBtn:hover{
+  background: #8181814f;
+  color: rgba(245, 245, 245, 0.823);
+}
+
+/* #addNewListForm{
+  overflow: auto;
+  overflow-x: hidden;
+} */

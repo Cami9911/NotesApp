@@ -2,8 +2,10 @@ const express = require('express');
 var bodyParser = require("body-parser")
 const mongoose = require('mongoose');
 const noteRouter = require('./routes/note')
+const listRouter = require('./routes/list')
 const Note = require('./models/note')
 const Image = require('./models/image')
+const List = require('./models/list')
 
 var fs = require('fs');
 var path = require('path');
@@ -24,6 +26,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch(err => console.log(err));
 
 app.use('/', noteRouter);
+app.use('/', listRouter);
 
 app.get('/', async (req, res) => {
   res.redirect('main.html');

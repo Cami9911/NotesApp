@@ -42,10 +42,10 @@
                 <p id="sidebarTitle3" class="sidebarTitle">Images</p>
             </div>
         </a>
-        <a href="#" onclick="goToTab('documents')">
+        <a href="#" onclick="goToTab('lists')">
             <div class="row" id="sidebarOption4">
-                <i class="fa-regular fa-clipboard sidebarIcons"></i>
-                <p id="sidebarTitle4" class="sidebarTitle">Projects</p>
+                <i class="fa-regular fa-rectangle-list sidebarIcons" style="font-size: 21px!important;margin-top: 4px;"></i>
+                <p id="sidebarTitle4" class="sidebarTitle">Lists</p>
             </div>
         </a>
     </div>
@@ -64,6 +64,14 @@
         <div class="quick-tips">
             <p class="tipsHeader">Quick Tips<i class="fa-solid fa-bolt lightningIcon"></i></p>
             <div class="grid-container">
+                <div class="grid-item">
+                    <div class="flex">
+                        <i class="fa-regular fa-note-sticky tipsIcons tipsIconLeft notificationIcons"></i>
+                        <i class="fa-solid fa-circle-check tipsIcons tipsIconRight notificationIcons"></i>
+                    </div>
+                    <p class="tipsTitle">Add a note</p>
+                    <p class="tipsSubtitle">Click to learn how you can add a note</p>
+                </div>
                 <div class="grid-item" onclick="displayModal('tipsImageModal', 'closeTipsImgModal', null)">
                     <div class="flex">
                         <i class="fa-regular fa-image tipsIcons tipsIconLeft imageIcons"></i>
@@ -72,21 +80,13 @@
                     <p class="tipsTitle">Add an image</p>
                     <p class="tipsSubtitle">Click to learn how you can add an image</p>
                 </div>
-                <div class="grid-item" onclick="displayModal('tipsDocumentModal', 'closeTipsDocModal', null)">
+                <div class="grid-item" onclick="displayModal('tipsListModal', 'closeTipsListModal', null)">
                     <div class="flex">
-                        <i class="fa-solid fa-file-circle-plus tipsIcons tipsIconLeft documentIcons"></i>
-                        <i class="fa-solid fa-circle-check tipsIcons tipsIconRight documentIcons"></i>
+                        <i class="fa-regular fa-rectangle-list tipsIcons tipsIconLeft listIcons"></i>
+                        <i class="fa-solid fa-circle-check tipsIcons tipsIconRight listIcons"></i>
                     </div>
-                    <p class="tipsTitle">Add a document</p>
-                    <p class="tipsSubtitle">Click to learn how you can add a document</p>
-                </div>
-                <div class="grid-item">
-                    <div class="flex">
-                        <i class="fa-solid fa-bell tipsIcons tipsIconLeft notificationIcons"></i>
-                        <i class="fa-solid fa-circle-check tipsIcons tipsIconRight notificationIcons"></i>
-                    </div>
-                    <p class="tipsTitle">Set a notification</p>
-                    <p class="tipsSubtitle">Click to learn how you can set notifications</p>
+                    <p class="tipsTitle">Add a list</p>
+                    <p class="tipsSubtitle">Click to learn how you can add a list</p>
                 </div>
             </div>
         </div>
@@ -144,21 +144,21 @@
             <div id="addDropdown" class="dropdown-content">
                 <a href="#" class="dropItem" onclick="displayModal('addNewNoteModal', 'closeModal', null)">Note</a>
                 <a href="#" class="dropItem" onclick="displayModal('addImageModal', 'closeImgModal', null)">Image</a>
-                <a href="#" class="dropItem">Document</a>
+                <a href="#" class="dropItem" onclick="displayModal('addNewListModal', 'closeListModal', null)">List</a>
             </div>
         </div>
 
         <div id="addNewNoteModal" class="modal">
-            <span class="closeModal">&times;</span>
+            <span class="closeModal" id="closeModal">&times;</span>
             <div class="modal-content">
                 <div class="note-form">
                     <div class="modal-header">
                         <p class="formTitle">Add a new note</p>
                         <div>
-                            <i class="fa-regular fa-heart iconHeart" id="favUnselected" onclick="enableIcon('favSelected','favUnselected')"></i>
-                            <i class="fa-solid fa-heart iconHeart" id="favSelected" onclick="disableIcon('favUnselected','favSelected')"></i>
-                            <i class="fa-regular fa-star" id="impUnselected" onclick="enableIcon('impSelected','impUnselected')"></i>
-                            <i class="fa-solid fa-star" id="impSelected" onclick="disableIcon('impUnselected','impSelected')"></i>
+                            <i class="fa-regular fa-heart iconHeart selectIcon" id="favUnselected" onclick="enableIcon('favSelected','favUnselected')"></i>
+                            <i class="fa-solid fa-heart iconHeart selectIcon" id="favSelected" onclick="disableIcon('favUnselected','favSelected')"></i>
+                            <i class="fa-regular fa-star selectIcon" id="impUnselected" onclick="enableIcon('impSelected','impUnselected')"></i>
+                            <i class="fa-solid fa-star selectIcon" id="impSelected" onclick="disableIcon('impUnselected','impSelected')"></i>
                         </div>
                     </div>
                     <form class="addNewNoteForm" method="POST" id="addNewNoteForm">
@@ -175,7 +175,7 @@
         </div>
 
         <div id="editNoteModal" class="modal">
-            <span class="closeEditModal">&times;</span>
+            <span class="closeModal" id="closeEditModal">&times;</span>
             <div class="modal-content">
                 <div class="note-form">
                     <p class="formTitle"><i class="fa-solid fa-pen editIconTitle" aria-hidden="true"></i>Edit note</p>
@@ -187,28 +187,32 @@
                         <div class="inputNote">
                             <textarea id="editContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
                         </div>
-                        <input type="cancel" value="Cancel" id="cancelNote" onclick="closeModal('editNoteModal')">
-                        <input type="submit" value="Save" id="saveNote" onclick="updateNote(event)">
+                        <div class="space-around" style="margin-top: 126px;">
+                            <input type="cancel" value="Cancel" class="modalBtn" id="cancelNote" onclick="closeModal('editNoteModal')">
+                            <input type="submit" value="Save" class="modalBtn" id="saveNote" onclick="updateNote(event)">
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
 
         <div id="addImageModal" class="modal">
-            <span class="closeImgModal">&times;</span>
+            <span class="closeModal" id="closeImgModal">&times;</span>
             <div class="modal-content">
                 <p class="formTitle">Add a new image</p>
                 <form action="/add-image" method="POST" class="formImage" enctype="multipart/form-data">
                     <label for="image">Select image:</label>
                     <input type="file" id="image" name="image" class="inputForm">
-                    <input type="cancel" value="Cancel" id="cancelImage" onclick="closeModal('addImageModal')">
-                    <input type="submit" id="saveImage">
+                    <div class="space-around" style="margin-top: 210px;">
+                        <input type="cancel" value="Cancel" class="modalBtn" id="cancelImage" onclick="closeModal('addImageModal')">
+                        <input type="submit" class="modalBtn" id="saveImage">
+                    </div>
                 </form>
             </div>
         </div>
 
         <div id="tipsImageModal" class="modal">
-            <span class="closeTipsImgModal">&times;</span>
+            <span class="closeModal" id="closeTipsImgModal">&times;</span>
             <div class="tipsModal">
                 <div class="flex" style="margin-bottom: 15px;">
                     <i class="fa-regular fa-image tipsIcons tipsIconLeft imageIcons"></i>
@@ -219,39 +223,77 @@
                     <p class="tipsExplanations">To add an image, open the "Add" button and select the "Image" option. A new pop-up
                         will open
                         and now you can select an image from your computer.</p>
-                    <img src="./tips1.png" alt="cdfsdg" style="width:180px;height:100px;">
+                    <img src="./tips1.png" alt="cdfsdg" style="height:100px;">
                 </div>
                 <div class="flex" style="margin-top: 20px; margin-right: 5%;">
                     <p class="tipsExplanations">To see your images, open the sidebar menu and select "My notes" option. You'll be
                         redirect to a
                         new page where you can select "Images" tab.</p>
-                    <img src="./tips2.png" alt="cdfsdg" style="width:220px;height:100px;">
+                    <img src="./tips2.png" alt="cdfsdg" style="height:100px;">
                 </div>
                 <p class="tipsExplanations" style="margin-top: 20px;">Mission complete!	😉</p>
             
             </div>
         </div>
 
-        <div id="tipsDocumentModal" class="modal">
-            <span class="closeTipsDocModal">&times;</span>
+        <div id="tipsListModal" class="modal">
+            <span class="closeModal" id="closeTipsListModal">&times;</span>
             <div class="tipsModal">
                 <div class="flex" style="margin-bottom: 15px;">
-                    <i class="fa-solid fa-file-circle-plus tipsIcons tipsIconLeft documentIcons"></i>
-                    <i class="fa-solid fa-circle-check tipsIcons tipsIconRightModal documentIcons"></i>
+                    <i class="fa-regular fa-rectangle-list tipsIcons tipsIconLeft listIcons"></i>
+                    <i class="fa-solid fa-circle-check tipsIcons tipsIconRightModal listIcons"></i>
                 </div>
-                <p class="tipsTitle" style="margin-bottom: 15px; font-size: 17px;">Add a document</p>
+                <p class="tipsTitle" style="margin-bottom: 15px; font-size: 17px;">Add a list</p>
                 <div class="flex" style="margin-right: 5%;">
-                    <p class="tipsExplanations">To add a document, open the "Add" button and select the "Document" option. A new pop-up
-                        will open and now you can select a document from your computer.</p>
-                    <img src="./tips3.png" alt="cdfsdg" style="width:180px;height:100px;">
+                    <p class="tipsExplanations">To add a list, open the "Add" button and select the "List" option. A new pop-up
+                        will open and now you can select a list from your computer.</p>
+                    <img src="./tips3.png" alt="cdfsdg" style="height:100px;">
                 </div>
                 <div class="flex" style="margin-top: 20px; margin-right: 5%;">
-                    <p class="tipsExplanations">To see your documents, open the sidebar menu and select "My notes" option. You'll be
-                        redirect to a new page where you can select "Documents" tab.</p>
-                    <img src="./tips2.png" alt="cdfsdg" style="width:220px;height:100px;">
+                    <p class="tipsExplanations">To see your lists, open the sidebar menu and select "Lists" option. You'll be
+                        redirect to a new page where you can select "List" tab.</p>
+                    <img src="./tips4.png" alt="cdfsdg" style="width:180px;height:100px;">
                 </div>
                 <p class="tipsExplanations" style="margin-top: 20px;">Mission complete!	😉</p>
             
+            </div>
+        </div>
+
+        <div id="addNewListModal" class="modal">
+            <span class="closeModal" id="closeListModal">&times;</span>
+            <div class="modal-content">
+                <div class="note-form">
+                    <div class="modal-header">
+                        <p class="formTitle">Add a new list</p>
+                        <div>
+                            <i class="fa-regular fa-heart iconHeart selectIcon" id="favUnselected1" onclick="enableIcon('favSelected1','favUnselected1')"></i>
+                            <i class="fa-solid fa-heart iconHeart selectIcon" id="favSelected1" onclick="disableIcon('favUnselected1','favSelected1')"></i>
+                            <i class="fa-regular fa-star selectIcon" id="impUnselected1" onclick="enableIcon('impSelected1','impUnselected1')"></i>
+                            <i class="fa-solid fa-star selectIcon" id="impSelected1" onclick="disableIcon('impUnselected1','impSelected1')"></i>
+                        </div>
+                    </div>
+                    <form class="addNewNoteForm" method="POST" id="addNewListForm">
+                        <div class="inputNote">
+                            <input type="text" id="noteTitle" class="inputForm" name="title" value="" placeholder="Title" style="font-size: 15px;">
+                        </div>
+                        <div style="overflow: auto; overflow-x:hidden; height: 240px;">
+                            <div class="" style="display: flex;">
+                                <input type="checkbox" id="checkboxList" name="checkboxItem0" class="checkboxList" onclick="checkText(this, null)">
+                                <input id="noteContent1" for="checkboxList" class="inputForm" name="content0" value=""></input>
+                                <i class="fa-solid fa-xmark removeItemList" onclick="remove(this)"></i>
+                            </div>
+                    
+                            <div class="addListItem" id="addListItem" onclick="createNewItemList()">
+                                <i class="fa-regular fa-plus" style="margin-top: 3px; margin-right:3px"></i>
+                                <p>List item</p>
+                            </div>
+                        </div>
+                        <div class="space-around">
+                            <input type="cancel" value="Cancel" class="modalBtn" id="" onclick="closeModal('addNewListModal')">
+                            <input type="submit" value="Submit" class="modalBtn" id="" onclick="getListValues(event)">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
