@@ -90,13 +90,12 @@ router.put('/update-note/:id', (req, res) => {
     });
 });
 
-router.get('/search-note', (req, res) => {
+router.post('/search-note', (req, res) => {
 
-  const search = {
-    search: req.body.search,
-  }
+  const search = req.body.search;
+  const query = { $text: { $search: search } };
 
-  Note.find({ $text: { $search: "lorem" } })
+  Note.find(query)
   .then(result => {
     res.send(result)
   })

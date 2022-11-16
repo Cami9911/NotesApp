@@ -50,7 +50,8 @@ header,
 }
 
 .combobox input {
-  width: 684px;
+  height: 32px;
+  width: 596px;
   padding: 5px;
   font-size: 20px;
   border: none;
@@ -227,6 +228,8 @@ div #optionsList {
 }
 
 .note-content {
+  overflow: hidden;
+  height: 175px;
   font-size: 10px;
   margin-top: 10px;
 }
@@ -260,7 +263,7 @@ p.title-panel {
 .fixed-button {
   position: fixed;
   display: inline-block;
-  bottom: 21%;
+  bottom: 30%;
   right: 21%;
 }
 
@@ -427,12 +430,20 @@ p.title-panel {
 
 .deleteIcon {
   margin-left: 115px;
-  color: rgba(101, 164, 122, 0.784);
+  color: #8a8a8ad2;
 }
 
 .editIcon {
   margin-left: 95px;
-  color: #d3a542;
+  color: #969696d2;
+}
+
+.editIcon:hover{
+  color: #8a8a8a50;
+}
+
+.deleteIcon:hover{
+  color: #8a8a8a50;
 }
 
 #deleteIcon {
@@ -540,6 +551,19 @@ p.title-panel {
   box-shadow: 8px 12px 15px -3px rgb(39 39 39 / 47%);
 }
 
+.searchModal{
+  background-color: #eeeeee;
+  margin: auto;
+  padding: 20px;
+  border: none;
+  width: 50%;
+  max-width: 75%;
+  height: fit-content;
+  border-radius: 10px;
+  color: #000000;
+  box-shadow: 8px 12px 15px -3px rgb(39 39 39 / 47%);
+}
+
 .imageDim{
   width: 100%;
   height: 100%;
@@ -619,7 +643,7 @@ textarea::placeholder {
 
 #noteContent,
 #editContent {
-  height: 100px;
+  height: 240px;
   resize: none
 }
 
@@ -739,3 +763,27 @@ textarea::placeholder {
   overflow: auto;
   overflow-x: hidden;
 } */
+
+.inputListEdit{
+  background-color: #ec8181;
+  border: none;
+}
+
+#errorMessage{
+  color: red;
+  display: none;
+  font-size: 15px;
+}
+
+#searchBtn{
+  color: white;
+  width: 80px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ec8181;
+  cursor: pointer;
+  justify-content: start;
+  align-items: center;
+  font-weight: bold;
+}

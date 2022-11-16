@@ -52,13 +52,13 @@
 
     <div id="main" onmouseover="closeNav()">
         <div class="combobox">
+        <form id="searchForm">
             <i class="fa-solid fa-magnifying-glass sidebarIcons searchIcon" id="searchIcon"></i>
-            <input type="text" name="option" list="optionsList" class="optionsInput"
-                onmouseover="hideIcon('searchIcon')" onmouseout="displayIcon('searchIcon')">
-            <datalist id="optionsList">
-                <option value="Note">
-                <option value="List">
-            </datalist>
+            <input type="text" name="option" list="optionsList" class="optionsInput" id="searchInput"
+                onchange="hideIcon('searchIcon')" onmouseout="displayIcon('searchIcon')">
+            <button onclick="searchValues(event)" id="searchBtn">Search</button>
+            <p id="errorMessage">There are no results for your search!</p>
+        </form>
         </div>
 
         <div class="quick-tips">
@@ -187,7 +187,7 @@
                         <div class="inputNote">
                             <textarea id="editContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
                         </div>
-                        <div class="space-around" style="margin-top: 126px;">
+                        <div class="space-around" style="margin-top: 2px;">
                             <input type="cancel" value="Cancel" class="modalBtn" id="cancelNote" onclick="closeModal('editNoteModal')">
                             <input type="submit" value="Save" class="modalBtn" id="saveNote" onclick="updateNote(event)">
                         </div>
@@ -290,18 +290,21 @@
                         </div>
                         <div class="space-around">
                             <input type="cancel" value="Cancel" class="modalBtn" id="" onclick="closeModal('addNewListModal')">
-                            <input type="submit" value="Submit" class="modalBtn" id="" onclick="getListValues(event)">
+                            <input type="submit" value="Submit" class="modalBtn" id="" onclick="getListValues(event,'addNewListForm','add-list')">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
+        <div id="searchModal" class="modal">
+            <span class="closeModal" id="closeSearchModal">&times;</span>
+            <div class="searchModal note-grid" id="searchModalContent">
+            </div>
+        </div>
+
 
     </div>
-
-
-
 
     <script defer src="./main.js"></script>
 </body>

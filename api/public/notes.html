@@ -159,6 +159,33 @@
             </div>
         </div>
 
+        <div id="editListModal" class="modal">
+            <span class="closeModal" id="" onclick="closeListModal()">&times;</span>
+            <div class="modal-content">
+                <div class="note-form">
+                    <p class="formTitle">Edit note</p>
+                    <form class="editNoteForm" method="POST" id="editListForm">
+                        <div class="inputNote">
+                            <input type="text" id="editTitleList" class="inputForm" name="title" value="" placeholder="Title">
+                        </div>
+                        <div style="overflow: auto; overflow-x:hidden; height: 240px;" >
+                            <div id="editListModalDiv">
+
+                            </div>
+                            <div class="addListItem" id="addListItem" onclick="createNewItemList()">
+                                <i class="fa-regular fa-plus" style="margin-top: 3px; margin-right:3px"></i>
+                                <p>List item</p>
+                            </div>
+                        </div>
+                        <div class="space-around">
+                            <input type="cancel" value="Cancel" class="modalBtn" id="cancelNote" onclick="closeModal('editNoteModal')">
+                            <input type="submit" value="Save" class="modalBtn" id="saveNote" onclick="updateListValues(event, 'editListForm')">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div id="seeImageModal" class="modal">
             <span class="closeModal" id="closeSeeImageModal">&times;</span>
             <div class="imgModal" id="imgModal"></div>
