@@ -1,0 +1,32 @@
+<div id="mySidebar" class="sidebar">
+    <div class="sidebarButtons">
+        <a class="openbtn" id="openbtn" onmouseover="openNav()">&#9776; </a>
+        <a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
+    </div>
+
+    <a href="main.html">
+        <div class="row" id="sidebarOption1">
+            <i class="fa-solid fa-house sidebarIcons" id="houseIcon"></i>
+            <p id="sidebarTitle1" class="sidebarTitle">Home</p>
+        </div>
+    </a>
+
+    <a href="notes.html">
+        <div class="row" id="sidebarOption2">
+            <i class="fa-regular fa-note-sticky sidebarIcons"></i>
+            <p id="sidebarTitle2" class="sidebarTitle">Notes</p>
+        </div>
+    </a>
+    <a href="#" onclick="goToTab('images')">
+        <div class="row" id="sidebarOption3">
+            <i class="fa-regular fa-image sidebarIcons" style="font-size: 22px!important;"></i>
+            <p id="sidebarTitle3" class="sidebarTitle">Images</p>
+        </div>
+    </a>
+    <a href="#" onclick="goToTab('lists')">
+        <div class="row" id="sidebarOption4">
+            <i class="fa-regular fa-rectangle-list sidebarIcons" style="font-size: 21px!important;margin-top: 4px;"></i>
+            <p id="sidebarTitle4" class="sidebarTitle">Lists</p>
+        </div>
+    </a>
+</div>

@@ -588,7 +588,7 @@ p.title-panel {
   margin-right: 5px;
 }
 
-#favSelected, #impSelected, #favSelected1, #impSelected1{
+#favSelected, #impSelected, #favSelected1, #impSelected1, #favSelectedEdit, #favUnselectedEdit, #impSelectedEdit, #impUnselectedEdit{
   display: none;
 }
 
@@ -776,6 +776,7 @@ textarea::placeholder {
 }
 
 #searchBtn{
+  margin-left: 3px;
   color: white;
   width: 80px;
   height: 32px;

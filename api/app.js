@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-const dbURI = 'mongodb+srv://camelia:e1oLWGf0nbSxgsnr@cluster0.66mkkg3.mongodb.net/NotesAppDB?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://camelia:U602QFjVSTWIyyPv@cluster0.66mkkg3.mongodb.net/NotesAppDB?retryWrites=true&w=majority';
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => app.listen(3000))

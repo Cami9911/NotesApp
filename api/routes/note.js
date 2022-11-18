@@ -44,6 +44,16 @@ router.get('/important-notes', async (req, res) => {
     })
 });
 
+router.post('/search-id', async (req, res) => {
+  await Note.find({_id: req.body?._id }).sort({ createdAt: 'desc' })
+    .then((result) => {
+      res.send(result)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+});
+
 router.post('/add-note', (req, res) => {
   const note = new Note({
     title: req.body.title,
@@ -78,7 +88,9 @@ router.put('/update-note/:id', (req, res) => {
 
   const note = {
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    important: req.body.important,
+    favourite: req.body.favourite
   }
 
   Note.findByIdAndUpdate(id, note)

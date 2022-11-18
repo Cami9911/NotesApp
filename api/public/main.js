@@ -50,23 +50,57 @@ function openTab(evt, cityName) {
   getStyleElementById(cityName).display = "block";
   evt.currentTarget.className += " active";
 }
+
 if(document.getElementById("defaultOpen"))
   document.getElementById("defaultOpen").click();
 
 
-function displayModal(idModal, idCloseModal, noteID) {
+function getNoteById(idModal, idCloseModal, url, id) {
+  sendData = {
+    '_id': id
+  }
+
+  fetch('http://localhost:3000/' + url, {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(sendData),
+  })
+    .then(async (response) => {
+      displayEditNoteModal(idModal, idCloseModal, await response.json());
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+function displayEditNoteModal(idModal, idCloseModal, note){
+
+  document.getElementsByClassName('note-form').id = note[0]._id;
+
+  document.getElementById('editTitle').value = note[0].title;
+  document.getElementById('editContent').innerHTML = note[0].content;
+
+  if(note[0].favourite){
+    enableIcon('favSelectedEdit','favUnselectedEdit');
+  } else {
+    disableIcon('favUnselectedEdit','favSelectedEdit');
+  }
+
+  if(note[0].important){
+    enableIcon('impSelectedEdit','impUnselectedEdit');
+  } else {
+    disableIcon('impUnselectedEdit','impSelectedEdit');
+  }
+
+  displayModal(idModal, idCloseModal);
+}
+
+
+function displayModal(idModal, idCloseModal) {
 
   document.getElementsByClassName("dropdown-content")[0].classList.remove('show');
-
-  if (noteID) {
-    document.getElementsByClassName('note-form').id = noteID;
-
-    var editTitle = document.getElementById('note-title' + noteID).innerHTML;
-    var editContent = document.getElementById('note-content' + noteID).innerHTML;
-
-    document.getElementById('editTitle').value = editTitle;
-    document.getElementById('editContent').innerHTML = editContent;
-  }
 
   var modal = document.getElementById(idModal);
   var span = document.getElementById(idCloseModal);
@@ -88,6 +122,7 @@ function displayModal(idModal, idCloseModal, noteID) {
 function closeModal(idModal) {
   getStyleElementById(idModal).display = "none";
 }
+
 function toBase64(arr) {
   //arr = new Uint8Array(arr) if it's an ArrayBuffer
   return btoa(
@@ -111,7 +146,7 @@ function seeImage(img){
   const image = document.getElementById("imgModal");
   image.innerHTML = `<img src="data:${img.image.contentType};base64,${toBase64(img.image.data.data)}" class="imageDim"></img>`;
 
-  displayModal('seeImageModal', 'closeSeeImageModal', null);
+  displayModal('seeImageModal', 'closeSeeImageModal');
 }
 
 function getNotes(notes, gridId) {
@@ -129,7 +164,8 @@ function getNotes(notes, gridId) {
     var iconDelete = createDeleteIcon(noteID,'delete-note');
 
     var iconEdit = createEditIcon(noteID);
-    iconEdit.addEventListener("click", function () { displayModal('editNoteModal', 'closeEditModal', noteID); }, false)
+    // iconEdit.addEventListener("click", function () { displayModal('editNoteModal', 'closeEditModal', noteID); }, false)
+    iconEdit.addEventListener("click", function () { getNoteById('editNoteModal', 'closeEditModal','search-id', noteID); }, false)
     // iconEdit.innerHTML = `<i class="fa-solid fa-edit editIcon" aria-hidden="true" onclick="displayModal('editNoteModal','closeEditModal')" id=${noteID}></i>`;
 
     const item = document.createElement('div');
@@ -282,6 +318,19 @@ function updateNote(event) {
 
   const formData = new FormData(document.getElementById('editNoteForm'));
   const data = Object.fromEntries(formData);
+
+  var favourite = false;
+  var important = false;
+
+  if(getStyleElementById("favSelectedEdit").display == "inline-block"){
+    favourite = true;
+  }
+  if(getStyleElementById("impSelectedEdit").display == "inline-block"){
+    important = true;
+  }
+
+  data["favourite"] = favourite;
+  data["important"] = important;
 
   var noteID = document.getElementsByClassName('note-form').id;
 
@@ -661,7 +710,7 @@ function getSearchData(sendData, form) {
     }
     else {
       getNotes(res, 'searchModalContent')
-      displayModal('searchModal', 'closeSearchModal', null);
+      displayModal('searchModal', 'closeSearchModal');
       }
     })
     .then(() => {

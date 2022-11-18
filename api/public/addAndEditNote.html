@@ -1,0 +1,120 @@
+<div class="fixed-button">
+    <button class="add-button" id="addNewNoteBtn" onclick="openDropdown()">
+        <i class="fa-solid fa-plus"></i>
+        <p class="label-button">New</p>
+    </button>
+    <div id="addDropdown" class="dropdown-content">
+        <a href="#" class="dropItem" onclick="displayModal('addNewNoteModal', 'closeModal')">Note</a>
+        <a href="#" class="dropItem" onclick="displayModal('addImageModal', 'closeImgModal')">Image</a>
+        <a href="#" class="dropItem" onclick="displayModal('addNewListModal', 'closeListModal')">List</a>
+    </div>
+</div>
+
+<div id="addNewNoteModal" class="modal">
+    <span class="closeModal" id="closeModal">&times;</span>
+    <div class="modal-content">
+        <div class="note-form">
+            <div class="modal-header">
+                <p class="formTitle">Add a new note</p>
+                <div>
+                    <i class="fa-regular fa-heart iconHeart selectIcon" id="favUnselected" onclick="enableIcon('favSelected','favUnselected')"></i>
+                    <i class="fa-solid fa-heart iconHeart selectIcon" id="favSelected" onclick="disableIcon('favUnselected','favSelected')"></i>
+                    <i class="fa-regular fa-star selectIcon" id="impUnselected" onclick="enableIcon('impSelected','impUnselected')"></i>
+                    <i class="fa-solid fa-star selectIcon" id="impSelected" onclick="disableIcon('impUnselected','impSelected')"></i>
+                </div>
+            </div>
+            <form class="addNewNoteForm" method="POST" id="addNewNoteForm">
+                <div class="inputNote">
+                    <input type="text" id="noteTitle" class="inputForm" name="title" value="" placeholder="Title">
+                </div>
+                <div class="inputNote">
+                    <textarea id="noteContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
+                </div>
+                <input type="submit" value="Submit" id="submit" onclick="getFormValues(event)">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="editNoteModal" class="modal">
+    <span class="closeModal" id="closeEditModal">&times;</span>
+    <div class="modal-content">
+        <div class="note-form">
+            <div class="modal-header">
+                <p class="formTitle"><i class="fa-solid fa-pen editIconTitle" aria-hidden="true"></i>Edit note</p>
+                <div>
+                    <i class="fa-regular fa-heart iconHeart selectIcon" id="favUnselectedEdit" onclick="enableIcon('favSelectedEdit','favUnselectedEdit')"></i>
+                    <i class="fa-solid fa-heart iconHeart selectIcon" id="favSelectedEdit" onclick="disableIcon('favUnselectedEdit','favSelectedEdit')"></i>
+                    <i class="fa-regular fa-star selectIcon" id="impUnselectedEdit" onclick="enableIcon('impSelectedEdit','impUnselectedEdit')"></i>
+                    <i class="fa-solid fa-star selectIcon" id="impSelectedEdit" onclick="disableIcon('impUnselectedEdit','impSelectedEdit')"></i>
+                </div>
+            </div>
+            <form class="editNoteForm" method="POST" id="editNoteForm">
+                <div class="inputNote">
+                    
+                    <input type="text" id="editTitle" class="inputForm" name="title" value="" placeholder="Title">
+                </div>
+                <div class="inputNote">
+                    <textarea id="editContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
+                </div>
+                <div class="space-around" style="margin-top: 2px;">
+                    <input type="cancel" value="Cancel" class="modalBtn" id="cancelNote" onclick="closeModal('editNoteModal')">
+                    <input type="submit" value="Save" class="modalBtn" id="saveNote" onclick="updateNote(event)">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="addImageModal" class="modal">
+    <span class="closeModal" id="closeImgModal">&times;</span>
+    <div class="modal-content">
+        <p class="formTitle">Add a new image</p>
+        <form action="/add-image" method="POST" class="formImage" enctype="multipart/form-data">
+            <label for="image">Select image:</label>
+            <input type="file" id="image" name="image" class="inputForm">
+            <div class="space-around" style="margin-top: 210px;">
+                <input type="cancel" value="Cancel" class="modalBtn" id="cancelImage" onclick="closeModal('addImageModal')">
+                <input type="submit" class="modalBtn" id="saveImage">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="addNewListModal" class="modal">
+    <span class="closeModal" id="closeListModal">&times;</span>
+    <div class="modal-content">
+        <div class="note-form">
+            <div class="modal-header">
+                <p class="formTitle">Add a new list</p>
+                <div>
+                    <i class="fa-regular fa-heart iconHeart selectIcon" id="favUnselected1" onclick="enableIcon('favSelected1','favUnselected1')"></i>
+                    <i class="fa-solid fa-heart iconHeart selectIcon" id="favSelected1" onclick="disableIcon('favUnselected1','favSelected1')"></i>
+                    <i class="fa-regular fa-star selectIcon" id="impUnselected1" onclick="enableIcon('impSelected1','impUnselected1')"></i>
+                    <i class="fa-solid fa-star selectIcon" id="impSelected1" onclick="disableIcon('impUnselected1','impSelected1')"></i>
+                </div>
+            </div>
+            <form class="addNewNoteForm" method="POST" id="addNewListForm">
+                <div class="inputNote">
+                    <input type="text" id="noteTitle" class="inputForm" name="title" value="" placeholder="Title" style="font-size: 15px;">
+                </div>
+                <div style="overflow: auto; overflow-x:hidden; height: 240px;">
+                    <div class="" style="display: flex;">
+                        <input type="checkbox" id="checkboxList" name="checkboxItem0" class="checkboxList" onclick="checkText(this, null)">
+                        <input id="noteContent1" for="checkboxList" class="inputForm" name="content0" value=""></input>
+                        <i class="fa-solid fa-xmark removeItemList" onclick="remove(this)"></i>
+                    </div>
+            
+                    <div class="addListItem" id="addListItem" onclick="createNewItemList()">
+                        <i class="fa-regular fa-plus" style="margin-top: 3px; margin-right:3px"></i>
+                        <p>List item</p>
+                    </div>
+                </div>
+                <div class="space-around">
+                    <input type="cancel" value="Cancel" class="modalBtn" id="" onclick="closeModal('addNewListModal')">
+                    <input type="submit" value="Submit" class="modalBtn" id="" onclick="getListValues(event,'addNewListForm','add-list')">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

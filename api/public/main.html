@@ -12,59 +12,60 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" href="#">
     <script src="https://kit.fontawesome.com/7601e35f17.js" crossorigin="anonymous"></script>
+    <script>
+        function includeHTML() {
+          var z, i, elmnt, file, xhttp;
+          /*loop through a collection of all HTML elements:*/
+          z = document.getElementsByTagName("*");
+          for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            /*search for elements with a certain atrribute:*/
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+              /*make an HTTP request using the attribute value as the file name:*/
+              xhttp = new XMLHttpRequest();
+              xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                  if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                  if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                  /*remove the attribute, and call this function once more:*/
+                  elmnt.removeAttribute("w3-include-html");
+                  includeHTML();
+                }
+              }      
+              xhttp.open("GET", file, true);
+              xhttp.send();
+              /*exit the function:*/
+              return;
+            }
+          }
+        };
+        </script>
     <title>To Do List</title>
 </head>
 
 <body>
-
-    <div id="mySidebar" class="sidebar">
-        <div class="sidebarButtons">
-            <a class="openbtn" id="openbtn" onmouseover="openNav()">&#9776; </a>
-            <a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
-        </div>
-
-        <a href="main.html">
-            <div class="row" id="sidebarOption1">
-                <i class="fa-solid fa-house sidebarIcons" id="houseIcon"></i>
-                <p id="sidebarTitle1" class="sidebarTitle">Home</p>
-            </div>
-        </a>
-
-        <a href="notes.html">
-            <div class="row" id="sidebarOption2">
-                <i class="fa-regular fa-note-sticky sidebarIcons"></i>
-                <p id="sidebarTitle2" class="sidebarTitle">Notes</p>
-            </div>
-        </a>
-        <a href="#" onclick="goToTab('images')">
-            <div class="row" id="sidebarOption3">
-                <i class="fa-regular fa-image sidebarIcons" style="font-size: 22px!important;"></i>
-                <p id="sidebarTitle3" class="sidebarTitle">Images</p>
-            </div>
-        </a>
-        <a href="#" onclick="goToTab('lists')">
-            <div class="row" id="sidebarOption4">
-                <i class="fa-regular fa-rectangle-list sidebarIcons" style="font-size: 21px!important;margin-top: 4px;"></i>
-                <p id="sidebarTitle4" class="sidebarTitle">Lists</p>
-            </div>
-        </a>
-    </div>
+    <div w3-include-html="menu.html"></div>
 
     <div id="main" onmouseover="closeNav()">
         <div class="combobox">
-        <form id="searchForm">
-            <i class="fa-solid fa-magnifying-glass sidebarIcons searchIcon" id="searchIcon"></i>
-            <input type="text" name="option" list="optionsList" class="optionsInput" id="searchInput"
-                onchange="hideIcon('searchIcon')" onmouseout="displayIcon('searchIcon')">
-            <button onclick="searchValues(event)" id="searchBtn">Search</button>
-            <p id="errorMessage">There are no results for your search!</p>
-        </form>
+            <form id="searchForm">
+                <i class="fa-solid fa-magnifying-glass sidebarIcons searchIcon" id="searchIcon"></i>
+                <div style="display:flex;">
+                    <input type="text" name="option" list="optionsList" class="optionsInput" id="searchInput"
+                        onchange="hideIcon('searchIcon')" onmouseout="displayIcon('searchIcon')">
+                    <div>
+                        <button onclick="searchValues(event)" id="searchBtn">Search</button>
+                    </div>
+                </div>
+                <p id="errorMessage">There are no results for your search!</p>
+            </form>
         </div>
 
         <div class="quick-tips">
             <p class="tipsHeader">Quick Tips<i class="fa-solid fa-bolt lightningIcon"></i></p>
             <div class="grid-container">
-                <div class="grid-item">
+                <div class="grid-item" onclick="displayModal('tipsNoteModal', 'closeTipsNoteModal')">
                     <div class="flex">
                         <i class="fa-regular fa-note-sticky tipsIcons tipsIconLeft notificationIcons"></i>
                         <i class="fa-solid fa-circle-check tipsIcons tipsIconRight notificationIcons"></i>
@@ -72,7 +73,7 @@
                     <p class="tipsTitle">Add a note</p>
                     <p class="tipsSubtitle">Click to learn how you can add a note</p>
                 </div>
-                <div class="grid-item" onclick="displayModal('tipsImageModal', 'closeTipsImgModal', null)">
+                <div class="grid-item" onclick="displayModal('tipsImageModal', 'closeTipsImgModal')">
                     <div class="flex">
                         <i class="fa-regular fa-image tipsIcons tipsIconLeft imageIcons"></i>
                         <i class="fa-solid fa-circle-check tipsIcons tipsIconRight imageIcons"></i>
@@ -80,7 +81,7 @@
                     <p class="tipsTitle">Add an image</p>
                     <p class="tipsSubtitle">Click to learn how you can add an image</p>
                 </div>
-                <div class="grid-item" onclick="displayModal('tipsListModal', 'closeTipsListModal', null)">
+                <div class="grid-item" onclick="displayModal('tipsListModal', 'closeTipsListModal')">
                     <div class="flex">
                         <i class="fa-regular fa-rectangle-list tipsIcons tipsIconLeft listIcons"></i>
                         <i class="fa-solid fa-circle-check tipsIcons tipsIconRight listIcons"></i>
@@ -108,18 +109,6 @@
 
             <div id="Recently" class="tabcontent">
                 <div class="note-grid" id="note-grid-recently">
-                    <!-- <div class="note-item" onmouseover="displayIcon('deleteIcon')" onmouseout="hideIcon('deleteIcon')">
-                        <i class="fa-solid fa-trash deleteIcon" id="deleteIcon" name='deleteIcon'
-                            onclick="deleteNote(this)"></i>
-                        <i class="fa-solid fa-edit editIcon" id="editIcon" name='editIcon'
-                            onclick="displayModal('editNoteModal','closeEditModal', null)"></i>
-                        <p class="note-title" id="note-title">Title</p>
-                        <p class="note-content" id="note-content">Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Ipsa, culpa
-                            nemo
-                            impedit esse provident asperiores optio quo enim! Aut ea inventore natus totam unde dolorem
-                            placeat eligendi modi? Modi, in!</p>
-                    </div> -->
                 </div>
             </div>
 
@@ -132,84 +121,9 @@
                 <div class="note-grid" id="note-grid-favourite">
                 </div>
             </div>
-
-
-
-        </div>
-        <div class="fixed-button">
-            <button class="add-button" id="addNewNoteBtn" onclick="openDropdown()">
-                <i class="fa-solid fa-plus"></i>
-                <p class="label-button">New</p>
-            </button>
-            <div id="addDropdown" class="dropdown-content">
-                <a href="#" class="dropItem" onclick="displayModal('addNewNoteModal', 'closeModal', null)">Note</a>
-                <a href="#" class="dropItem" onclick="displayModal('addImageModal', 'closeImgModal', null)">Image</a>
-                <a href="#" class="dropItem" onclick="displayModal('addNewListModal', 'closeListModal', null)">List</a>
-            </div>
         </div>
 
-        <div id="addNewNoteModal" class="modal">
-            <span class="closeModal" id="closeModal">&times;</span>
-            <div class="modal-content">
-                <div class="note-form">
-                    <div class="modal-header">
-                        <p class="formTitle">Add a new note</p>
-                        <div>
-                            <i class="fa-regular fa-heart iconHeart selectIcon" id="favUnselected" onclick="enableIcon('favSelected','favUnselected')"></i>
-                            <i class="fa-solid fa-heart iconHeart selectIcon" id="favSelected" onclick="disableIcon('favUnselected','favSelected')"></i>
-                            <i class="fa-regular fa-star selectIcon" id="impUnselected" onclick="enableIcon('impSelected','impUnselected')"></i>
-                            <i class="fa-solid fa-star selectIcon" id="impSelected" onclick="disableIcon('impUnselected','impSelected')"></i>
-                        </div>
-                    </div>
-                    <form class="addNewNoteForm" method="POST" id="addNewNoteForm">
-                        <div class="inputNote">
-                            <input type="text" id="noteTitle" class="inputForm" name="title" value="" placeholder="Title">
-                        </div>
-                        <div class="inputNote">
-                            <textarea id="noteContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
-                        </div>
-                        <input type="submit" value="Submit" id="submit" onclick="getFormValues(event)">
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div id="editNoteModal" class="modal">
-            <span class="closeModal" id="closeEditModal">&times;</span>
-            <div class="modal-content">
-                <div class="note-form">
-                    <p class="formTitle"><i class="fa-solid fa-pen editIconTitle" aria-hidden="true"></i>Edit note</p>
-                    <form class="editNoteForm" method="POST" id="editNoteForm">
-                        <div class="inputNote">
-                            
-                            <input type="text" id="editTitle" class="inputForm" name="title" value="" placeholder="Title">
-                        </div>
-                        <div class="inputNote">
-                            <textarea id="editContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
-                        </div>
-                        <div class="space-around" style="margin-top: 2px;">
-                            <input type="cancel" value="Cancel" class="modalBtn" id="cancelNote" onclick="closeModal('editNoteModal')">
-                            <input type="submit" value="Save" class="modalBtn" id="saveNote" onclick="updateNote(event)">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div id="addImageModal" class="modal">
-            <span class="closeModal" id="closeImgModal">&times;</span>
-            <div class="modal-content">
-                <p class="formTitle">Add a new image</p>
-                <form action="/add-image" method="POST" class="formImage" enctype="multipart/form-data">
-                    <label for="image">Select image:</label>
-                    <input type="file" id="image" name="image" class="inputForm">
-                    <div class="space-around" style="margin-top: 210px;">
-                        <input type="cancel" value="Cancel" class="modalBtn" id="cancelImage" onclick="closeModal('addImageModal')">
-                        <input type="submit" class="modalBtn" id="saveImage">
-                    </div>
-                </form>
-            </div>
-        </div>
+        <div w3-include-html="addAndEditNote.html"></div>
 
         <div id="tipsImageModal" class="modal">
             <span class="closeModal" id="closeTipsImgModal">&times;</span>
@@ -259,41 +173,26 @@
             </div>
         </div>
 
-        <div id="addNewListModal" class="modal">
-            <span class="closeModal" id="closeListModal">&times;</span>
-            <div class="modal-content">
-                <div class="note-form">
-                    <div class="modal-header">
-                        <p class="formTitle">Add a new list</p>
-                        <div>
-                            <i class="fa-regular fa-heart iconHeart selectIcon" id="favUnselected1" onclick="enableIcon('favSelected1','favUnselected1')"></i>
-                            <i class="fa-solid fa-heart iconHeart selectIcon" id="favSelected1" onclick="disableIcon('favUnselected1','favSelected1')"></i>
-                            <i class="fa-regular fa-star selectIcon" id="impUnselected1" onclick="enableIcon('impSelected1','impUnselected1')"></i>
-                            <i class="fa-solid fa-star selectIcon" id="impSelected1" onclick="disableIcon('impUnselected1','impSelected1')"></i>
-                        </div>
-                    </div>
-                    <form class="addNewNoteForm" method="POST" id="addNewListForm">
-                        <div class="inputNote">
-                            <input type="text" id="noteTitle" class="inputForm" name="title" value="" placeholder="Title" style="font-size: 15px;">
-                        </div>
-                        <div style="overflow: auto; overflow-x:hidden; height: 240px;">
-                            <div class="" style="display: flex;">
-                                <input type="checkbox" id="checkboxList" name="checkboxItem0" class="checkboxList" onclick="checkText(this, null)">
-                                <input id="noteContent1" for="checkboxList" class="inputForm" name="content0" value=""></input>
-                                <i class="fa-solid fa-xmark removeItemList" onclick="remove(this)"></i>
-                            </div>
-                    
-                            <div class="addListItem" id="addListItem" onclick="createNewItemList()">
-                                <i class="fa-regular fa-plus" style="margin-top: 3px; margin-right:3px"></i>
-                                <p>List item</p>
-                            </div>
-                        </div>
-                        <div class="space-around">
-                            <input type="cancel" value="Cancel" class="modalBtn" id="" onclick="closeModal('addNewListModal')">
-                            <input type="submit" value="Submit" class="modalBtn" id="" onclick="getListValues(event,'addNewListForm','add-list')">
-                        </div>
-                    </form>
+        <div id="tipsNoteModal" class="modal">
+            <span class="closeModal" id="closeTipsNoteModal">&times;</span>
+            <div class="tipsModal">
+                <div class="flex" style="margin-bottom: 15px;">
+                    <i class="fa-regular fa-note-sticky tipsIcons tipsIconLeft notificationIcons"></i>
+                    <i class="fa-solid fa-circle-check tipsIcons tipsIconRightModal notificationIcons"></i>
                 </div>
+                <p class="tipsTitle" style="margin-bottom: 15px; font-size: 17px;">Add a note</p>
+                <div class="flex" style="margin-right: 5%;">
+                    <p class="tipsExplanations">To add a note, open the "Add" button and select the "Note" option. A new pop-up
+                        will open and now you can select a note from your computer.</p>
+                    <img src="./tips3.png" alt="cdfsdg" style="height:100px;">
+                </div>
+                <div class="flex" style="margin-top: 20px; margin-right: 5%;">
+                    <p class="tipsExplanations">To see your notes, open the sidebar menu and select "Notes" option. You'll be
+                        redirect to a new page where you can select "Note" tab.</p>
+                    <img src="./tips4.png" alt="cdfsdg" style="width:180px;height:100px;">
+                </div>
+                <p class="tipsExplanations" style="margin-top: 20px;">Mission complete!	😉</p>
+            
             </div>
         </div>
 
@@ -305,7 +204,7 @@
 
 
     </div>
-
+    <script> includeHTML();</script>
     <script defer src="./main.js"></script>
 </body>
 

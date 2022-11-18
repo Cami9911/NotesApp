@@ -12,43 +12,41 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" href="#">
     <script src="https://kit.fontawesome.com/7601e35f17.js" crossorigin="anonymous"></script>
+    <script>
+        function includeHTML() {
+          var z, i, elmnt, file, xhttp;
+          /*loop through a collection of all HTML elements:*/
+          z = document.getElementsByTagName("*");
+          for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            /*search for elements with a certain atrribute:*/
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+              /*make an HTTP request using the attribute value as the file name:*/
+              xhttp = new XMLHttpRequest();
+              xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                  if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                  if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                  /*remove the attribute, and call this function once more:*/
+                  elmnt.removeAttribute("w3-include-html");
+                  includeHTML();
+                }
+              }      
+              xhttp.open("GET", file, true);
+              xhttp.send();
+              /*exit the function:*/
+              return;
+            }
+          }
+        };
+    </script>
     <title>To Do List</title>
 </head>
 
 <body>
-    <div id="mySidebar" class="sidebar">
-        <div class="sidebarButtons">
-            <a class="openbtn" id="openbtn" onmouseover="openNav()">&#9776; </a>
-            <a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
-        </div>
-
-
-        <a href="main.html">
-            <div class="row" id="sidebarOption1">
-                <i class="fa-solid fa-house sidebarIcons" id="houseIcon"></i>
-                <p id="sidebarTitle1" class="sidebarTitle">Home</p>
-            </div>
-        </a>
-
-        <a href="notes.html">
-            <div class="row" id="sidebarOption2">
-                <i class="fa-regular fa-note-sticky sidebarIcons"></i>
-                <p id="sidebarTitle2" class="sidebarTitle">My Notes</p>
-            </div>
-        </a>
-        <a href="#">
-            <div class="row" id="sidebarOption3">
-                <i class="fa-regular fa-calendar-check sidebarIcons"></i>
-                <p id="sidebarTitle3" class="sidebarTitle">To-do list</p>
-            </div>
-        </a>
-        <a href="#">
-            <div class="row" id="sidebarOption4">
-                <i class="fa-regular fa-clipboard sidebarIcons"></i>
-                <p id="sidebarTitle4" class="sidebarTitle">Projects</p>
-            </div>
-        </a>
-    </div>
+ 
+    <div w3-include-html="menu.html"></div>
 
     <div id="main" onmouseover="closeNav()">
 
@@ -96,68 +94,7 @@
 
 
         </div>
-        <div class="fixed-button">
-            <button class="add-button" id="addNewNoteBtn" onclick="openDropdown()">
-                <i class="fa-solid fa-plus"></i>
-                <p class="label-button">New</p>
-            </button>
-            <div id="addDropdown" class="dropdown-content">
-                <a href="#" class="dropItem" onclick="displayModal('addNewNoteModal', 'closeModal', null)">Note</a>
-                <a href="#" class="dropItem">Image</a>
-                <a href="#" class="dropItem">List</a>
-            </div>
-        </div>
-        <div id="addNewNoteModal" class="modal">
-            <span class="closeModal">&times;</span>
-            <div class="modal-content">
-                <div class="note-form">
-                    <div class="modal-header">
-                        <p class="formTitle">Add a new note</p>
-                        <div>
-                            <i class="fa-regular fa-heart iconHeart" id="favUnselected"
-                                onclick="enableIcon('favSelected','favUnselected')"></i>
-                            <i class="fa-solid fa-heart iconHeart" id="favSelected"
-                                onclick="disableIcon('favUnselected','favSelected')"></i>
-                            <i class="fa-regular fa-star" id="impUnselected"
-                                onclick="enableIcon('impSelected','impUnselected')"></i>
-                            <i class="fa-solid fa-star" id="impSelected"
-                                onclick="disableIcon('impUnselected','impSelected')"></i>
-                        </div>
-                    </div>
-                    <form class="addNewNoteForm" method="POST" id="addNewNoteForm">
-                        <div class="inputNote">
-                            <input type="text" id="noteTitle" class="inputForm" name="title" value="" placeholder="Title">
-                        </div>
-                        <div class="inputNote">
-                            <textarea id="noteContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
-                        </div>
-                        <input type="submit" value="Submit" id="submit" onclick="getFormValues(event)">
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div id="editNoteModal" class="modal">
-            <span class="closeModal" id="closeEditModal">&times;</span>
-            <div class="modal-content">
-                <div class="note-form">
-                    <p class="formTitle">Edit note</p>
-                    <form class="editNoteForm" method="POST" id="editNoteForm">
-                        <div class="inputNote">
-                            <i class="fa-solid fa-pen editIcon" aria-hidden="true"></i>
-                            <input type="text" id="editTitle" class="inputForm" name="title" value="" placeholder="Title">
-                        </div>
-                        <div class="inputNote">
-                            <textarea id="editContent" class="inputForm" name="content" value="" placeholder="Content"></textarea>
-                        </div>
-                        <div class="space-around">
-                            <input type="cancel" value="Cancel" class="modalBtn" id="cancelNote" onclick="closeModal('editNoteModal')">
-                            <input type="submit" value="Save" class="modalBtn" id="saveNote" onclick="updateNote(event)">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <div w3-include-html="addAndEditNote.html"></div>
 
         <div id="editListModal" class="modal">
             <span class="closeModal" id="" onclick="closeListModal()">&times;</span>
@@ -191,6 +128,7 @@
             <div class="imgModal" id="imgModal"></div>
         </div>
     </div>
+    <script> includeHTML();</script>
     <script defer src="./main.js"></script>
 </body>
 
