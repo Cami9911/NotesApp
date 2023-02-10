@@ -240,7 +240,8 @@ margin-top: 5px;
 }
 
 .note-title {
-  margin-top: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .note-date {
